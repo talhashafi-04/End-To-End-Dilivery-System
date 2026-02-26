@@ -1,0 +1,378 @@
+<mxfile host="app.diagrams.net" modified="2025-11-04T00:00:00.000Z" agent="draw.io" version="24.0.4">
+  <diagram name="UC10-Track Order" id="uc10-sequence">
+    <mxGraphModel dx="1434" dy="844" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Title -->
+        <mxCell id="title" value="UC10: Track Order - Sequence Diagram" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="450" y="20" width="500" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- Actors/Components -->
+        <mxCell id="customer" value="Customer" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="80" width="30" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="web-app" value="Web/Mobile App" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="220" y="90" width="120" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="tracking-service" value="Tracking Service" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="420" y="90" width="120" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="order-service" value="Order Service" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="90" width="120" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="location-service" value="Location Service" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="820" y="90" width="120" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="database" value="Database" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="80" width="80" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="support-service" value="Support Service" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="90" width="120" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- Lifelines -->
+        <mxCell id="lifeline-customer" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="95" y="150" as="sourcePoint" />
+            <mxPoint x="95" y="1320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="lifeline-webapp" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="279.5" y="130" as="sourcePoint" />
+            <mxPoint x="279.5" y="1320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="lifeline-tracking" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="479.5" y="130" as="sourcePoint" />
+            <mxPoint x="479.5" y="1320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="lifeline-order" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="679.5" y="130" as="sourcePoint" />
+            <mxPoint x="679.5" y="1320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="lifeline-location" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="879.5" y="130" as="sourcePoint" />
+            <mxPoint x="879.5" y="1320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="lifeline-db" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1059.5" y="140" as="sourcePoint" />
+            <mxPoint x="1059.5" y="1320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="lifeline-support" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1239.5" y="130" as="sourcePoint" />
+            <mxPoint x="1239.5" y="1320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Main Flow -->
+        <!-- 1. Navigate to Track Order -->
+        <mxCell id="msg1" value="1: Navigate to &quot;Track Order&quot; page" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="95" y="180" as="sourcePoint" />
+            <mxPoint x="275" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 2. Display order list -->
+        <mxCell id="msg2" value="2: displayOrderList()" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="280" y="210" as="sourcePoint" />
+            <mxPoint x="475" y="210" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 3. Get customer orders -->
+        <mxCell id="msg3" value="3: getCustomerOrders(customerId)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="480" y="240" as="sourcePoint" />
+            <mxPoint x="1055" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 4. Return order list -->
+        <mxCell id="msg4" value="4: orderList(orderId, status, date)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1055" y="270" as="sourcePoint" />
+            <mxPoint x="480" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 5. Show orders -->
+        <mxCell id="msg5" value="5: showOrders(orderList)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="475" y="300" as="sourcePoint" />
+            <mxPoint x="280" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 6. Display to customer -->
+        <mxCell id="msg6" value="6: display order list to customer" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="275" y="330" as="sourcePoint" />
+            <mxPoint x="95" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 7. Select order -->
+        <mxCell id="msg7" value="7: Select order to track (orderId)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="95" y="370" as="sourcePoint" />
+            <mxPoint x="275" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 8. Request tracking info -->
+        <mxCell id="msg8" value="8: requestTrackingInfo(orderId)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="280" y="400" as="sourcePoint" />
+            <mxPoint x="475" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 9. Validate order ID -->
+        <mxCell id="msg9" value="9: validateOrderId(orderId)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="480" y="430" as="sourcePoint" />
+            <mxPoint x="675" y="430" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 10. Check order exists -->
+        <mxCell id="msg10" value="10: checkOrderExists(orderId)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="680" y="460" as="sourcePoint" />
+            <mxPoint x="1055" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 11. Order valid -->
+        <mxCell id="msg11" value="11: orderValid(true)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1055" y="490" as="sourcePoint" />
+            <mxPoint x="680" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 12. Get current status -->
+        <mxCell id="msg12" value="12: getCurrentStatus(orderId)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="480" y="520" as="sourcePoint" />
+            <mxPoint x="675" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 13. Query order status -->
+        <mxCell id="msg13" value="13: queryOrderStatus(orderId)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="680" y="550" as="sourcePoint" />
+            <mxPoint x="1055" y="550" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 14. Return status -->
+        <mxCell id="msg14" value="14: orderStatus(status, timestamp, riderInfo)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1055" y="580" as="sourcePoint" />
+            <mxPoint x="680" y="580" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 15. Get location -->
+        <mxCell id="msg15" value="15: getCurrentLocation(orderId, riderId)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="480" y="610" as="sourcePoint" />
+            <mxPoint x="875" y="610" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 16. Query GPS -->
+        <mxCell id="msg16" value="16: queryGPSLocation(riderId)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="880" y="640" as="sourcePoint" />
+            <mxPoint x="1055" y="640" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 17. Return GPS data -->
+        <mxCell id="msg17" value="17: gpsData(latitude, longitude, timestamp)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1055" y="670" as="sourcePoint" />
+            <mxPoint x="880" y="670" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 18. Calculate route -->
+        <mxCell id="note1" value="Calculate delivery route&#xa;and ETA based on&#xa;current location" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=10;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="800" y="690" width="160" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- 19. Get route -->
+        <mxCell id="msg18" value="18: getDeliveryRoute(currentLocation, destination)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="880" y="770" as="sourcePoint" />
+            <mxPoint x="1055" y="770" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 20. Return route -->
+        <mxCell id="msg19" value="19: routeData(waypoints, estimatedArrival)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1055" y="800" as="sourcePoint" />
+            <mxPoint x="880" y="800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 21. Return location info -->
+        <mxCell id="msg20" value="20: locationInfo(coords, route, ETA)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="875" y="830" as="sourcePoint" />
+            <mxPoint x="480" y="830" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 22. Get status history -->
+        <mxCell id="msg21" value="21: getStatusHistory(orderId)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="480" y="860" as="sourcePoint" />
+            <mxPoint x="675" y="860" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 23. Query history -->
+        <mxCell id="msg22" value="22: queryStatusHistory(orderId)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="680" y="890" as="sourcePoint" />
+            <mxPoint x="1055" y="890" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 24. Return history -->
+        <mxCell id="msg23" value="23: historyData(statusList, timestamps)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1055" y="920" as="sourcePoint" />
+            <mxPoint x="680" y="920" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 25. History returned -->
+        <mxCell id="msg24" value="24: statusHistory(history)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="675" y="950" as="sourcePoint" />
+            <mxPoint x="480" y="950" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 26. Real-time updates -->
+        <mxCell id="note2" value="Setup real-time updates&#xa;via WebSocket/SSE" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=10;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="360" y="970" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- 27. Subscribe to updates -->
+        <mxCell id="msg25" value="25: subscribeToUpdates(orderId)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="480" y="1040" as="sourcePoint" />
+            <mxPoint x="675" y="1040" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 28. Subscription confirmed -->
+        <mxCell id="msg26" value="26: subscriptionActive" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="675" y="1070" as="sourcePoint" />
+            <mxPoint x="480" y="1070" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 29. Display tracking info -->
+        <mxCell id="msg27" value="27: displayTrackingInfo(status, location, route, ETA, history)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="475" y="1100" as="sourcePoint" />
+            <mxPoint x="280" y="1100" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 30. Render UI -->
+        <mxCell id="msg28" value="28: renderTrackingUI(trackingData)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="275" y="1130" as="sourcePoint" />
+            <mxPoint x="95" y="1130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 31. Customer views -->
+        <mxCell id="note3" value="Customer views:&#xa;- Current status&#xa;- Live location on map&#xa;- Delivery route&#xa;- ETA&#xa;- Status history" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=10;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="20" y="1150" width="150" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- Optional: Contact Support -->
+        <mxCell id="opt-frame" value="opt" style="shape=umlFrame;whiteSpace=wrap;html=1;width=40;height=30;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1260" width="560" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="opt-condition" value="[Customer has issues]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="85" y="1265" width="140" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="msg-support" value="29: contactSupport(orderId, issue)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="95" y="1290" as="sourcePoint" />
+            <mxPoint x="1235" y="1290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Alternative: Invalid Order ID -->
+        <mxCell id="alt-frame" value="alt" style="shape=umlFrame;whiteSpace=wrap;html=1;width=40;height=30;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="420" y="1330" width="680" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="alt-condition" value="[Order ID is invalid]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="465" y="1335" width="130" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="msg-error" value="error: displayError(&quot;Invalid order ID&quot;)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;strokeColor=#b85450;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="475" y="1365" as="sourcePoint" />
+            <mxPoint x="280" y="1365" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="alt-else" value="[Cannot retrieve location]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="465" y="1380" width="160" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="msg-last-known" value="fallback: displayLastKnownStatus(orderId)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="875" y="1395" as="sourcePoint" />
+            <mxPoint x="480" y="1395" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

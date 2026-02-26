@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.effect.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="application.CustomerDashboardController"
+            style="-fx-background-color: #f5f5f5;">
+    
+    <!-- Left Navigation Rail -->
+    <left>
+        <VBox style="-fx-background-color: #2C3E50; -fx-pref-width: 240; -fx-spacing: 0;">
+            
+            <!-- Logo Header -->
+            <HBox alignment="CENTER" spacing="12" style="-fx-padding: 25 20; -fx-background-color: #1a252f;">
+                <Label text="📦" style="-fx-font-size: 32px;"/>
+                <VBox>
+                    <Label text="SwiftShip" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold; -fx-font-family: 'Century Gothic';"/>
+                    <Label text="Customer Portal" style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 11px;"/>
+                </VBox>
+            </HBox>
+            
+            <Separator style="-fx-background-color: rgba(255,255,255,0.1);"/>
+            
+            <!-- Navigation Menu -->
+            <VBox spacing="5" style="-fx-padding: 20 10;">
+                
+                <Button fx:id="btnDashboard" text="Dashboard" onAction="#showDashboard"
+                        style="-fx-background-color: #2980B9; -fx-text-fill: white; -fx-alignment: CENTER_LEFT; -fx-padding: 15 20; -fx-font-size: 14px; -fx-font-weight: bold; -fx-cursor: hand; -fx-background-radius: 8; -fx-pref-width: 220;"
+                        graphicTextGap="15">
+                    <graphic><Label text="🏠" style="-fx-font-size: 18px;"/></graphic>
+                </Button>
+                
+                <Button fx:id="btnSubmitRequest" text="Submit Request" onAction="#showSubmitRequest"
+                        style="-fx-background-color: transparent; -fx-text-fill: rgba(255,255,255,0.8); -fx-alignment: CENTER_LEFT; -fx-padding: 15 20; -fx-font-size: 14px; -fx-cursor: hand; -fx-background-radius: 8; -fx-pref-width: 220;"
+                        graphicTextGap="15">
+                    <graphic><Label text="📝" style="-fx-font-size: 18px;"/></graphic>
+                </Button>
+                
+                <Button fx:id="btnMyOrders" text="My Orders" onAction="#showMyOrders"
+                        style="-fx-background-color: transparent; -fx-text-fill: rgba(255,255,255,0.8); -fx-alignment: CENTER_LEFT; -fx-padding: 15 20; -fx-font-size: 14px; -fx-cursor: hand; -fx-background-radius: 8; -fx-pref-width: 220;"
+                        graphicTextGap="15">
+                    <graphic><Label text="📋" style="-fx-font-size: 18px;"/></graphic>
+                </Button>
+                
+                <Button fx:id="btnNotifications" text="Notifications" onAction="#showNotifications"
+                        style="-fx-background-color: transparent; -fx-text-fill: rgba(255,255,255,0.8); -fx-alignment: CENTER_LEFT; -fx-padding: 15 20; -fx-font-size: 14px; -fx-cursor: hand; -fx-background-radius: 8; -fx-pref-width: 220;"
+                        graphicTextGap="15">
+                    <graphic>
+                        <StackPane>
+                            <Label text="🔔" style="-fx-font-size: 18px;"/>
+                            <Label fx:id="notificationBadge" text="0" 
+                                   style="-fx-background-color: #E74C3C; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 2 6; -fx-font-size: 9px; -fx-font-weight: bold;"
+                                   translateX="10" translateY="-8" visible="false"/>
+                        </StackPane>
+                    </graphic>
+                </Button>
+                
+                <Button fx:id="btnProfile" text="My Profile" onAction="#showProfile"
+                        style="-fx-background-color: transparent; -fx-text-fill: rgba(255,255,255,0.8); -fx-alignment: CENTER_LEFT; -fx-padding: 15 20; -fx-font-size: 14px; -fx-cursor: hand; -fx-background-radius: 8; -fx-pref-width: 220;"
+                        graphicTextGap="15">
+                    <graphic><Label text="👤" style="-fx-font-size: 18px;"/></graphic>
+                </Button>
+                
+            </VBox>
+            
+            <Region VBox.vgrow="ALWAYS"/>
+            
+            <!-- User Info & Logout -->
+            <VBox spacing="15" style="-fx-padding: 20; -fx-background-color: #1a252f;">
+                <VBox spacing="8" alignment="CENTER">
+                    <Label text="👤" style="-fx-font-size: 40px; -fx-background-color: #2980B9; -fx-background-radius: 50; -fx-padding: 15;"/>
+                    <Label fx:id="lblUsername" text="Customer Name" style="-fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;"/>
+                    <Label fx:id="lblCustomerId" text="ID: CUST001" style="-fx-text-fill: rgba(255,255,255,0.6); -fx-font-size: 11px;"/>
+                </VBox>
+                
+                <Separator style="-fx-background-color: rgba(255,255,255,0.1);"/>
+                
+                <Button text="🚪 Logout" onAction="#handleLogout"
+                        style="-fx-background-color: #E74C3C; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand; -fx-pref-width: 200; -fx-pref-height: 40; -fx-background-radius: 8;"/>
+            </VBox>
+            
+        </VBox>
+    </left>
+    
+    <center>
+        <BorderPane>
+            
+            <!-- Top Header Bar -->
+            <top>
+                <HBox alignment="CENTER_LEFT" spacing="30" style="-fx-background-color: white; -fx-padding: 20 40; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+                    
+                    <VBox>
+                        <Label fx:id="lblWelcome" text="Welcome Back!" 
+                               style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2C3E50; -fx-font-family: 'Century Gothic';"/>
+                        <Label fx:id="lblCurrentDateTime" text="Monday, Nov 21, 2025 - 10:30 AM" 
+                               style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d;"/>
+                    </VBox>
+                    
+                    <Region HBox.hgrow="ALWAYS"/>
+                    
+                    <!-- Quick Stats -->
+                    <HBox spacing="20">
+                        <VBox alignment="CENTER" spacing="5" style="-fx-padding: 12 20; -fx-background-color: #E8F8F5; -fx-background-radius: 10;">
+                            <Label text="Total Orders" style="-fx-font-size: 11px; -fx-text-fill: #16A085;"/>
+                            <Label fx:id="lblTotalOrders" text="12" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #16A085;"/>
+                        </VBox>
+                        
+                        <VBox alignment="CENTER" spacing="5" style="-fx-padding: 12 20; -fx-background-color: #FEF5E7; -fx-background-radius: 10;">
+                            <Label text="Pending" style="-fx-font-size: 11px; -fx-text-fill: #F39C12;"/>
+                            <Label fx:id="lblPendingOrders" text="3" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #F39C12;"/>
+                        </VBox>
+                        
+                        <VBox alignment="CENTER" spacing="5" style="-fx-padding: 12 20; -fx-background-color: #EBF5FB; -fx-background-radius: 10;">
+                            <Label text="In Transit" style="-fx-font-size: 11px; -fx-text-fill: #3498DB;"/>
+                            <Label fx:id="lblInTransitOrders" text="2" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #3498DB;"/>
+                        </VBox>
+                    </HBox>
+                    
+                </HBox>
+            </top>
+            
+            <center>
+                <!-- Content Stack Pane - switches between different views -->
+                <StackPane fx:id="contentStackPane" style="-fx-padding: 30;">
+                    
+                    <!-- DASHBOARD VIEW (Default) -->
+                    <ScrollPane fx:id="dashboardView" fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+                        <VBox spacing="25">
+                            
+                            <!-- Dashboard Header -->
+                            <HBox alignment="CENTER_LEFT" spacing="15">
+                                <Label text="📊" style="-fx-font-size: 28px;"/>
+                                <VBox>
+                                    <Label text="Dashboard Overview" 
+                                           style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2C3E50; -fx-font-family: 'Century Gothic';"/>
+                                    <Label text="Monitor your delivery activities and order status" 
+                                           style="-fx-font-size: 13px; -fx-text-fill: #7f8c8d;"/>
+                                </VBox>
+                            </HBox>
+                            
+                            <!-- Stats Cards Grid -->
+                            <GridPane hgap="20" vgap="20">
+                                <columnConstraints>
+                                    <ColumnConstraints percentWidth="25"/>
+                                    <ColumnConstraints percentWidth="25"/>
+                                    <ColumnConstraints percentWidth="25"/>
+                                    <ColumnConstraints percentWidth="25"/>
+                                </columnConstraints>
+                                
+                                <!-- Card 1: Total Orders -->
+                                <VBox GridPane.columnIndex="0" spacing="15" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 25;">
+                                    <effect><DropShadow color="#00000015" radius="15" offsetY="5"/></effect>
+                                    <HBox alignment="CENTER_LEFT" spacing="15">
+                                        <Label text="📦" style="-fx-font-size: 36px; -fx-background-color: #E8F8F5; -fx-background-radius: 12; -fx-padding: 12;"/>
+                                        <VBox>
+                                            <Label text="Total Orders" style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d;"/>
+                                            <Label fx:id="lblDashTotalOrders" text="0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #16A085;"/>
+                                        </VBox>
+                                    </HBox>
+                                    <Label text="All time deliveries" style="-fx-font-size: 11px; -fx-text-fill: #95a5a6;"/>
+                                </VBox>
+                                
+                                <!-- Card 2: Active Orders -->
+                                <VBox GridPane.columnIndex="1" spacing="15" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 25;">
+                                    <effect><DropShadow color="#00000015" radius="15" offsetY="5"/></effect>
+                                    <HBox alignment="CENTER_LEFT" spacing="15">
+                                        <Label text="🚚" style="-fx-font-size: 36px; -fx-background-color: #EBF5FB; -fx-background-radius: 12; -fx-padding: 12;"/>
+                                        <VBox>
+                                            <Label text="Active" style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d;"/>
+                                            <Label fx:id="lblActiveOrders" text="0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #3498DB;"/>
+                                        </VBox>
+                                    </HBox>
+                                    <Label text="Currently in transit" style="-fx-font-size: 11px; -fx-text-fill: #95a5a6;"/>
+                                </VBox>
+                                
+                                <!-- Card 3: Delivered -->
+                                <VBox GridPane.columnIndex="2" spacing="15" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 25;">
+                                    <effect><DropShadow color="#00000015" radius="15" offsetY="5"/></effect>
+                                    <HBox alignment="CENTER_LEFT" spacing="15">
+                                        <Label text="✅" style="-fx-font-size: 36px; -fx-background-color: #D5F4E6; -fx-background-radius: 12; -fx-padding: 12;"/>
+                                        <VBox>
+                                            <Label text="Delivered" style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d;"/>
+                                            <Label fx:id="lblDeliveredOrders" text="0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #2ECC71;"/>
+                                        </VBox>
+                                    </HBox>
+                                    <Label text="Successfully completed" style="-fx-font-size: 11px; -fx-text-fill: #95a5a6;"/>
+                                </VBox>
+                                
+                                <!-- Card 4: Pending -->
+                                <VBox GridPane.columnIndex="3" spacing="15" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 25;">
+                                    <effect><DropShadow color="#00000015" radius="15" offsetY="5"/></effect>
+                                    <HBox alignment="CENTER_LEFT" spacing="15">
+                                        <Label text="⏳" style="-fx-font-size: 36px; -fx-background-color: #FEF5E7; -fx-background-radius: 12; -fx-padding: 12;"/>
+                                        <VBox>
+                                            <Label text="Pending" style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d;"/>
+                                            <Label fx:id="lblPendingDash" text="0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #F39C12;"/>
+                                        </VBox>
+                                    </HBox>
+                                    <Label text="Awaiting approval" style="-fx-font-size: 11px; -fx-text-fill: #95a5a6;"/>
+                                </VBox>
+                                
+                            </GridPane>
+                            
+                            <!-- Recent Orders Section -->
+                            <VBox spacing="20" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 30;">
+                                <effect><DropShadow color="#00000015" radius="15" offsetY="5"/></effect>
+                                
+                                <HBox alignment="CENTER_LEFT">
+                                    <Label text="📋 Recent Orders" 
+                                           style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+                                    <Region HBox.hgrow="ALWAYS"/>
+                                    <Button text="View All →" onAction="#showMyOrders"
+                                            style="-fx-background-color: transparent; -fx-text-fill: #2980B9; -fx-font-size: 13px; -fx-cursor: hand; -fx-underline: true;"/>
+                                </HBox>
+                                
+                                <Separator style="-fx-background-color: #ecf0f1;"/>
+                                
+                                <VBox fx:id="recentOrdersContainer" spacing="15">
+                                    <!-- Orders will be loaded here dynamically -->
+                                    <Label text="Loading recent orders..." style="-fx-text-fill: #95a5a6; -fx-font-size: 13px;"/>
+                                </VBox>
+                            </VBox>
+                            
+                            <!-- Quick Actions -->
+                            <VBox spacing="20" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 30;">
+                                <effect><DropShadow color="#00000015" radius="15" offsetY="5"/></effect>
+                                
+                                <Label text="⚡ Quick Actions" 
+                                       style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+                                
+                                <Separator style="-fx-background-color: #ecf0f1;"/>
+                                
+                                <HBox spacing="20">
+                                    <Button text="📝 New Delivery Request" onAction="#showSubmitRequest" prefWidth="250" prefHeight="60"
+                                            style="-fx-background-color: #2980B9; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;">
+                                        <effect><DropShadow color="#2980B980" radius="8" offsetY="3"/></effect>
+                                    </Button>
+                                    
+                                    <Button text="🔔 View Notifications" onAction="#showNotifications" prefWidth="250" prefHeight="60"
+                                            style="-fx-background-color: #9B59B6; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;">
+                                        <effect><DropShadow color="#9B59B680" radius="8" offsetY="3"/></effect>
+                                    </Button>
+                                    
+                                    <Button text="👤 Update Profile" onAction="#showProfile" prefWidth="250" prefHeight="60"
+                                            style="-fx-background-color: #16A085; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;">
+                                        <effect><DropShadow color="#16A08580" radius="8" offsetY="3"/></effect>
+                                    </Button>
+                                </HBox>
+                            </VBox>
+                            
+                        </VBox>
+                    </ScrollPane>
+                    
+                    <!-- SUBMIT REQUEST VIEW -->
+                    <ScrollPane fx:id="submitRequestView" visible="false" fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+                        <!-- Content loaded from controller -->
+                    </ScrollPane>
+                    
+                    <!-- MY ORDERS VIEW -->
+                    <ScrollPane fx:id="myOrdersView" visible="false" fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+                        <!-- Content loaded from controller -->
+                    </ScrollPane>
+                    
+                    <!-- NOTIFICATIONS VIEW -->
+                    <ScrollPane fx:id="notificationsView" visible="false" fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+                        <!-- Content loaded from controller -->
+                    </ScrollPane>
+                    
+                    <!-- PROFILE VIEW -->
+                    <ScrollPane fx:id="profileView" visible="false" fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+                        <!-- Content loaded from controller -->
+                    </ScrollPane>
+                    
+                </StackPane>
+            </center>
+            
+        </BorderPane>
+    </center>
+    
+</BorderPane>

@@ -1,0 +1,282 @@
+Details of all USE-CASES
+1. Authenticate User
+Use Case Name: Authenticate User​
+Scope: Delivery Management System​
+Level: User goal​
+Primary Actor: User (Customer, Manager, Dispatcher, or Rider)​
+Stakeholders and their Interests:
+●​ User: Wants secure and convenient access.​
+●​ System Administrator: Wants only authorized users to access the system.​
+Preconditions:
+●​ User has registered an account with valid credentials.​
+●​ System is online and functional.
+Postconditions:
+●​ User is successfully logged in or authentication fails with appropriate error messages.​
+Main Success Scenario:
+1.​ User navigates to the login page.​
+2.​ User enters username and password.​
+3.​ User clicks the “Login” button.​
+4.​ System verifies that the username exists.​5.​ System checks that the password matches.​
+6.​ System verifies the account status.​
+7.​ System grants access and displays the appropriate dashboard.
+Extensions:
+●​ If credentials are invalid then system displays error and user retries or requests
+password reset.​
+●​ If account is locked due to multiple failed attempts then user contacts admin.​
+2. Place Delivery Order and Attach Picture
+Use Case Name: Place Delivery Order​
+Scope: Delivery Management System​
+Level: User goal​
+Primary Actor: Customer​
+Stakeholders and their Interests:
+●​ Customer: Wants to successfully place orders.​
+●​ Business: Wants accurate order details for timely delivery.​
+Preconditions:
+●​ User is authenticated.​
+●​ User has items to deliver.​
+Postconditions:
+●​ Delivery order is created in the system.​
+●​ Picture attached is stored in database or cloud storage.​
+Main Success Scenario:1.​ Customer navigates to the “Place Order” page.​
+2.​ Customer selects items and enters delivery details.​
+3.​ Customer uploads any required picture.​
+4.​ Customer reviews the order summary.​
+5.​ Customer submits the order.​
+6.​ System validates all fields and picture format.​
+7.​ Manager approves the order by reviewing the picture of the shipment
+8.​ System stores the order and confirms placement.
+Extensions:
+●​ If picture upload fails then system prompts retry.​
+●​ If order details are incomplete then system prompts for missing information.​
+3. Process Payment
+Use Case Name: Process Payment​
+Scope: Delivery Management System​
+Level: User goal​
+Primary Actor: Customer​
+Stakeholders and their Interests:
+●​ Customer: Wants secure and successful payment.​
+●​ Business: Wants payment confirmation before processing order.​
+Preconditions:
+●​ Order has been placed.​
+●​ Payment method is valid and active.​
+Postconditions:●​ Payment is successfully processed or declined.​
+●​ Payment record is stored in the system.​
+Main Success Scenario:
+1.​ Customer selects an order to pay.​
+2.​ Customer chooses a payment method.​
+3.​ Customer enters payment details.​
+4.​ System validates payment information.​
+5.​ System processes the transaction via the gateway.​
+6.​ System receives confirmation from the gateway.​
+7.​ System updates order to “Paid” and notifies the customer..​
+Extensions:
+●​ If payment is declined then system notifies user and allows retry or selection of another
+method.​
+●​ If payment gateway is unavailable then system notifies user.​
+4. Approve Delivery Order
+Use Case Name: Approve Delivery Order​
+Scope: Delivery Management System​
+Level: User goal​
+Primary Actor: Manager​
+Stakeholders and their Interests:
+●​ Manager: Wants to ensure only valid orders proceed.​
+●​ Customer: Wants timely approval of order.​
+Preconditions:●​ Order has been placed and payment processed.​
+Postconditions:​
+●​ Order status updated to “Approved.”​
+Main Success Scenario:
+1.​ Manager navigates to “Pending Orders.”​
+2.​ Manager selects an order to review.​
+3.​ Manager verifies payment and order details and picture of shipment.​
+4.​ Manager checks compliance with policies.​
+5.​ Manager approves the order.​
+6.​ System updates order status to “Approved.”​
+7.​ System notifies customer and triggers dispatch.
+Extensions:
+●​ If order details are incomplete then manager requests corrections.​
+●​ If order is rejected then system updates status to “Rejected” and notifies customer.​
+5. Manager Delegates Order to Dispatcher
+Use Case Name: Delegate Order to Dispatcher​
+Scope: Delivery Management System​
+Level: User goal​
+Primary Actor: Manager​
+Stakeholders and their Interests:
+●​ Manager: Efficient task delegation.​
+●​ Dispatcher: Receives clear order assignment.​
+Preconditions:●​ Order is approved.​
+Postconditions:
+●​ Order is assigned to a dispatcher.
+Main Success Scenario:
+1.​ Manager views approved orders awaiting assignment.​
+2.​ Manager selects an order to delegate.​
+3.​ Manager checks dispatcher availability.​
+4.​ Manager assigns the order to a dispatcher.​
+5.​ System records the assignment.​
+6.​ System notifies the dispatcher of the new order.​
+7.​ Dispatcher confirms receipt in the system.
+Extensions:
+●​ If no dispatcher is available then system queues order.​
+●​ If dispatcher rejects assignment then manager reassigns.​
+6. Dispatcher Assigns Pickup Rider
+Use Case Name: Assign Pickup Rider​
+Scope: Delivery Management System​
+Level: User goal​
+Primary Actor: Dispatcher​
+Stakeholders and their Interests:
+●​ Dispatcher: Efficient delivery scheduling.​●​ Pickup Rider: Clear instructions for pickup.​
+●​ Customer: Timely collection.​
+Preconditions:
+●​ Order is assigned to dispatcher.​
+Postconditions:
+●​ Pickup rider assigned.​
+●​ Order status updated.​
+Main Success Scenario:
+1.​ Dispatcher views assigned orders requiring pickup.​
+2.​ Dispatcher selects an order.​
+3.​ Dispatcher checks pickup rider availability.​
+4.​ Dispatcher assigns the order to a rider.​
+5.​ System updates the order with rider details.​
+6.​ System notifies the rider of assignment.​
+7.​ Rider confirms assignment in the system.
+Extensions:
+●​ If no riders are available then system schedules next available.​
+●​ If rider rejects then dispatcher reassigns.​
+7. Pickup Rider Collects Parcel from CustomerUse Case Name: Collect Parcel​
+Scope: Delivery Management System​
+Level: User goal​
+Primary Actor: Pickup Rider​
+Stakeholders and their Interests:
+●​ Pickup Rider: Accurate and efficient collection.​
+●​ Customer: Parcel collected on time.​
+●​ Business: Parcel enters delivery process.​
+Preconditions:
+●​ Pickup rider assigned.​
+●​ Customer is ready with parcel.​
+Postconditions:
+●​ Parcel collected.​
+●​ Order status updated to “In Warehouse” or “Ready for Dispatch.”​
+Main Success Scenario:
+1.​ Rider receives assignment notification.​
+2.​ Rider navigates to the customer’s location.​
+3.​ Rider verifies customer identity and parcel details.​
+4.​ Rider collects the parcel.​
+5.​ Rider confirms collection in the system.​
+6.​ System updates order status to “In Warehouse” or “Ready for Dispatch.”​
+7.​ System notifies the customer of successful collection.​
+Extensions:●​ If customer unavailable then reschedule.​
+●​ If parcel is incomplete or damaged then rider reports issue.​
+8. Dispatch from Warehouse
+Use Case Name: Dispatch from Warehouse​
+Scope: Delivery Management System​
+Level: User goal​
+Primary Actor: Warehouse Staff / Dispatcher
+Stakeholders and their Interests:
+●​ Warehouse Staff: Efficient inventory handling and parcel dispatch.​
+●​ Delivery Rider: Receives clear assignment for delivery.​
+●​ Business: Accurate stock management and smooth operations.​
+Preconditions:
+●​ Parcel collected from pickup.​
+●​ Inventory is updated and parcel is ready at warehouse.​
+Postconditions:
+●​ Parcel is ready for delivery.​
+●​ Delivery rider assigned.​
+●​ Order status updated to “Out for Delivery.”​
+Main Success Scenario:
+1.​ Warehouse staff receives the parcel.​
+2.​ Staff verifies order details and updates warehouse inventory.​
+3.​ Staff prepares the parcel for delivery.​4.​ Staff assigns the parcel to a delivery rider based on availability.​
+5.​ System updates the order status to “Out for Delivery.”​
+6.​ System notifies the delivery rider with delivery instructions.​
+7.​ Delivery rider confirms assignment in the system.​
+Extensions:
+●​ If inventory discrepancy occurs then staff reports the issue.​
+●​ If parcel is damaged then staff informs manager.​
+●​ If rider is unavailable then system schedules the next available rider.​
+9. Notify Customer
+Use Case Name: Notify Customer​
+Scope: Delivery Management System​
+Level: User goal​
+Primary Actor: System / Warehouse Staff / Dispatcher
+Stakeholders and their Interests:
+●​ Customer: Wants timely and accurate updates about their order.​
+●​ Business: Enhances transparency and trust with customers.​
+Preconditions:
+●​ Parcel is dispatched and order status is updated to “Out for Delivery.”​
+Postconditions:
+●​ Customer receives notification of parcel status and expected delivery.​Main Success Scenario:
+1.​ System detects that a parcel has been dispatched.​
+2.​ System retrieves customer contact information.​
+3.​ System generates a notification message (SMS, email, or app notification).​
+4.​ System sends notification to the customer.​
+5.​ System logs the notification for record and auditing.​
+6.​ Customer receives notification and can track order.​
+7.​ System updates notification status to confirm successful delivery of message.​
+Extensions:
+●​ If notification fails then system retries sending automatically.​
+●​ If contact information is missing or invalid then staff manually contacts the customer.​
+10. Track Order
+Use Case Name: Track Order​
+Scope: Delivery Management System​
+Level: User goal​
+Primary Actor: Customer​
+Stakeholders and their Interests:
+●​ Customer: Real-time order status.​
+●​ Business: Transparency builds trust.​
+Preconditions:
+●​ Order exists and has valid status.​
+Postconditions:●​ Customer views current order location/status.​
+Main Success Scenario:
+1.​ Customer navigates to “Track Order.”​
+2.​ Customer selects the order to track.​
+3.​ System retrieves the current status and location.​
+4.​ System displays the delivery route and estimated arrival.​
+5.​ System shows history of previous status updates.​
+6.​ System updates tracking information in real-time.​
+7.​ Customer can contact support if there are issues.​
+Extensions:
+●​ If order ID is invalid then system displays error.​
+●​ If system cannot retrieve location then display last known status.​
+11. Update Order Status
+Use Case Name: Update Order Status​
+Scope: Delivery Management System​
+Level: User goal​
+Primary Actor: Rider / Dispatcher / Warehouse Staff​
+Stakeholders and their Interests:
+●​ Customer: Accurate status updates.​
+●​ Business: Operational transparency.​
+Preconditions:●​ Order is in process.​
+Postconditions:
+●​ Order status updated in system.​
+Main Success Scenario:
+1.​ Actor logs into the system.​
+2.​ Actor navigates to assigned orders.​
+3.​ Actor selects an order to update.​
+4.​ Actor enters the current status of the order.​
+5.​ System validates and records the status.​
+6.​ System notifies the customer of the update.​
+7.​ System updates dashboards and reports with the new status.
+Extensions:
+●​ If status update is invalid then system prompts correction.​
+12. Generate Report
+Use Case Name: Generate Report​
+Scope: Delivery Management System​
+Level: User goal​
+Primary Actor: Manager / Admin​
+Stakeholders and their Interests:
+●​ Manager/Admin: Insight into performance, deliveries, payments.​
+●​ Business: Data-driven decisions.​Preconditions:
+●​ System has relevant data.​
+●​ User has proper privileges.​
+Postconditions:
+●​ Report generated and stored/exported.​
+Main Success Scenario:
+1.​ Manager or admin logs into the reporting section.​
+2.​ User selects the report type.​
+3.​ System retrieves relevant data from the database.​
+4.​ System aggregates and formats the data.​
+5.​ System generates and displays the report.​
+6.​ User reviews, downloads, or exports the report.​
+7.​ System logs report generation for auditing purposes.​
+Extensions:
+●​ If no data available then system displays “No records found.”​
+●​ If export fails then system prompts retry

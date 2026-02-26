@@ -1,0 +1,24 @@
+6. Dispatcher Assigns Pickup Rider
+Use Case Name: Assign Pickup Rider​
+Scope: Delivery Management System​
+Level: User goal​
+Primary Actor: Dispatcher​
+Stakeholders and their Interests:
+●​ Dispatcher: Efficient delivery scheduling.​●​ Pickup Rider: Clear instructions for pickup.​
+●​ Customer: Timely collection.​
+Preconditions:
+●​ Order is assigned to dispatcher.​
+Postconditions:
+●​ Pickup rider assigned.​
+●​ Order status updated.​
+Main Success Scenario:
+1.​ Dispatcher views assigned orders requiring pickup.​
+2.​ Dispatcher selects an order.​
+3.​ Dispatcher checks pickup rider availability.​
+4.​ Dispatcher assigns the order to a rider.​
+5.​ System updates the order with rider details.​
+6.​ System notifies the rider of assignment.​
+7.​ Rider confirms assignment in the system.
+Extensions:
+●​ If no riders are available then system schedules next available.​
+●​ If rider rejects then dispatcher reassigns.​

@@ -1,0 +1,27 @@
+8. Dispatch from Warehouse
+Use Case Name: Dispatch from Warehouse​
+Scope: Delivery Management System​
+Level: User goal​
+Primary Actor: Warehouse Staff / Dispatcher
+Stakeholders and their Interests:
+●​ Warehouse Staff: Efficient inventory handling and parcel dispatch.​
+●​ Delivery Rider: Receives clear assignment for delivery.​
+●​ Business: Accurate stock management and smooth operations.​
+Preconditions:
+●​ Parcel collected from pickup.​
+●​ Inventory is updated and parcel is ready at warehouse.​
+Postconditions:
+●​ Parcel is ready for delivery.​
+●​ Delivery rider assigned.​
+●​ Order status updated to “Out for Delivery.”​
+Main Success Scenario:
+1.​ Warehouse staff receives the parcel.​
+2.​ Staff verifies order details and updates warehouse inventory.​
+3.​ Staff prepares the parcel for delivery.​4.​ Staff assigns the parcel to a delivery rider based on availability.​
+5.​ System updates the order status to “Out for Delivery.”​
+6.​ System notifies the delivery rider with delivery instructions.​
+7.​ Delivery rider confirms assignment in the system.​
+Extensions:
+●​ If inventory discrepancy occurs then staff reports the issue.​
+●​ If parcel is damaged then staff informs manager.​
+●​ If rider is unavailable then system schedules the next available rider.​

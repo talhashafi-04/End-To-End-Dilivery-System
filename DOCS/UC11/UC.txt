@@ -1,0 +1,21 @@
+11. Update Order Status
+Use Case Name: Update Order Status​
+Scope: Delivery Management System​
+Level: User goal​
+Primary Actor: Rider / Dispatcher / Warehouse Staff​
+Stakeholders and their Interests:
+●​ Customer: Accurate status updates.​
+●​ Business: Operational transparency.​
+Preconditions:●​ Order is in process.​
+Postconditions:
+●​ Order status updated in system.​
+Main Success Scenario:
+1.​ Actor logs into the system.​
+2.​ Actor navigates to assigned orders.​
+3.​ Actor selects an order to update.​
+4.​ Actor enters the current status of the order.​
+5.​ System validates and records the status.​
+6.​ System notifies the customer of the update.​
+7.​ System updates dashboards and reports with the new status.
+Extensions:
+●​ If status update is invalid then system prompts correction.​

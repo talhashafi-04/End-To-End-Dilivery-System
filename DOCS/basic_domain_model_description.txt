@@ -1,0 +1,1083 @@
+================================================================================
+    DOMAIN MODEL DESCRIPTION - END-TO-END DELIVERY SYSTEM
+    Detailed Documentation of All Classes, Attributes, and Relationships
+================================================================================
+
+OVERVIEW:
+---------
+The domain model represents the core business entities and their relationships
+in the End-to-End Delivery Management System. It follows object-oriented 
+principles with inheritance hierarchies, associations, and multiplicities.
+
+================================================================================
+SECTION 1: USER HIERARCHY (INHERITANCE STRUCTURE)
+================================================================================
+
+1.1 USER (ABSTRACT BASE CLASS)
+------------------------------
+Type: Abstract Class
+Color Code: Light Blue (#dae8fc)
+Purpose: Base class for all system users, providing common authentication 
+         and account management functionality
+
+Attributes:
+- user_id: String
+  * Unique identifier for each user
+  * Primary key for user identification
+  
+- username: String
+  * Unique login name
+  * Used for authentication
+  
+- password: String
+  * Hashed password for security
+  * Stored using bcrypt/argon2 encryption
+  
+- email: String
+  * User's email address
+  * Used for notifications and password recovery
+  
+- phone: String
+  * Contact phone number
+  * Used for SMS notifications
+  
+- account_status: String
+  * Current account state (Active, Locked, Suspended, Inactive)
+  * Controls user access to system
+  
+- created_date: Date
+  * Account creation timestamp
+  * Used for auditing and analytics
+  
+- last_login: Date
+  * Most recent login timestamp
+  * Used for security monitoring
+
+Relationships:
+- Specialized by: Customer, Manager, Dispatcher, Rider, Admin (inheritance)
+
+
+1.2 CUSTOMER (INHERITS FROM USER)
+----------------------------------
+Type: Concrete Class
+Color Code: Light Green (#d5e8d4)
+Purpose: Represents customers who place delivery orders
+
+Attributes:
+- delivery_address: String
+  * Default delivery location
+  * Can be overridden per order
+  
+- billing_address: String
+  * Billing/invoice address
+  * May differ from delivery address
+  
+- customer_type: String
+  * Customer category (Individual, Business, Premium, Regular)
+  * Affects pricing and priority
+  
+- loyalty_points: Integer
+  * Accumulated reward points
+  * Used for discounts and promotions
+
+Inherited Attributes:
+- All attributes from User class
+
+Relationships:
+- places → Order (1 to *)
+  * One customer can place multiple orders
+  * Each order belongs to exactly one customer
+  
+- receives → Notification (1 to *)
+  * Customer receives multiple notifications
+  * Each notification is sent to one customer
+
+
+1.3 MANAGER (INHERITS FROM USER)
+---------------------------------
+Type: Concrete Class
+Color Code: Light Green (#d5e8d4)
+Purpose: Manages order approval and dispatcher delegation
+
+Attributes:
+- department: String
+  * Manager's organizational department
+  * Example: Operations, Logistics, Customer Service
+  
+- authorization_level: Integer
+  * Approval authority level (1-10)
+  * Determines what orders can be approved
+  
+- assigned_region: String
+  * Geographic region managed
+  * Example: North Zone, Central Region
+
+Inherited Attributes:
+- All attributes from User class
+
+Relationships:
+- approves → Order (1 to *)
+  * Manager approves multiple orders
+  * Each order approved by one manager
+  
+- delegates to → Dispatcher (many to many implied)
+  * Manager assigns orders to dispatchers
+  
+- generates → Report (1 to *)
+  * Manager creates various reports
+  * For analytics and decision making
+
+
+1.4 DISPATCHER (INHERITS FROM USER)
+------------------------------------
+Type: Concrete Class
+Color Code: Light Green (#d5e8d4)
+Purpose: Coordinates pickup and delivery assignments
+
+Attributes:
+- assigned_zone: String
+  * Geographic zone for operations
+  * Determines which orders can be assigned
+  
+- availability_status: String
+  * Current working status (Available, Busy, Off-duty)
+  * Affects assignment capability
+  
+- active_orders_count: Integer
+  * Number of currently managed orders
+  * Used for workload balancing
+
+Inherited Attributes:
+- All attributes from User class
+
+Relationships:
+- creates → Assignment (1 to *)
+  * Dispatcher creates multiple assignments
+  * Links riders to orders
+  
+- receives delegation from → Manager
+  * Manager delegates orders to dispatcher
+
+
+1.5 RIDER (INHERITS FROM USER)
+-------------------------------
+Type: Concrete Class
+Color Code: Light Green (#d5e8d4)
+Purpose: Pickup riders and delivery riders who handle parcels
+
+Attributes:
+- vehicle_type: String
+  * Type of transport (Bike, Car, Van, Motorcycle)
+  * Determines capacity and parcel size limits
+  
+- license_number: String
+  * Vehicle registration or driver's license
+  * Required for legal compliance
+  
+- availability_status: String
+  * Current status (Available, On-delivery, Off-duty, Break)
+  * Real-time availability for assignments
+  
+- current_location: String
+  * GPS coordinates or address
+  * Used for proximity-based assignment
+  
+- rider_type: String
+  * Role type (Pickup Rider, Delivery Rider, Both)
+  * Determines assignment eligibility
+  
+- rating: Float
+  * Performance rating (0.0 to 5.0)
+  * Based on customer feedback and metrics
+
+Inherited Attributes:
+- All attributes from User class
+
+Relationships:
+- receives → Assignment (1 to *)
+  * Rider receives multiple assignments
+  * Each assignment goes to one rider
+  
+- follows → Route (1 to *)
+  * Rider follows multiple routes
+  * Each route assigned to one rider
+
+
+1.6 ADMIN (INHERITS FROM USER)
+-------------------------------
+Type: Concrete Class
+Color Code: Light Green (#d5e8d4)
+Purpose: System administration and reporting
+
+Attributes:
+- privileges: String[]
+  * Array of admin permissions
+  * Examples: user_management, system_config, data_access
+  
+- access_level: String
+  * Admin tier (Super Admin, Admin, Support)
+  * Determines scope of access
+  
+- department: String
+  * Administrative department
+  * Example: IT, Operations, Finance
+
+Inherited Attributes:
+- All attributes from User class
+
+Relationships:
+- generates → Report (1 to *)
+  * Admin creates system-wide reports
+  * Includes performance, audit, and compliance reports
+
+
+================================================================================
+SECTION 2: CORE BUSINESS ENTITIES
+================================================================================
+
+2.1 ORDER (CENTRAL ENTITY)
+---------------------------
+Type: Concrete Class
+Color Code: Yellow (#fff2cc)
+Purpose: Represents a delivery order throughout its lifecycle
+
+Attributes:
+- order_id: String
+  * Unique order identifier
+  * Primary key, visible to customers
+  
+- customer_id: String
+  * Foreign key to Customer
+  * Links order to customer who placed it
+  
+- status: String
+  * Current order state
+  * Values: Created, Pending Approval, Paid, Approved, Assigned to Dispatcher,
+    Pickup Assigned, In Warehouse, Out for Delivery, Delivered, Cancelled
+  
+- order_date: Date
+  * Order creation timestamp
+  * Start of order lifecycle
+  
+- approved_date: Date
+  * Manager approval timestamp
+  * Null if not yet approved
+  
+- pickup_address: String
+  * Location to collect parcel
+  * Complete address with coordinates
+  
+- delivery_address: String
+  * Final destination address
+  * Complete address with coordinates
+  
+- estimated_delivery: Date
+  * Predicted delivery date/time
+  * Based on distance and current load
+  
+- actual_delivery: Date
+  * Actual completion timestamp
+  * Null until delivered
+  
+- priority: String
+  * Order urgency (Standard, Express, Same-day)
+  * Affects cost and routing
+  
+- total_cost: Float
+  * Total order amount
+  * Includes delivery charges and taxes
+  
+- special_instructions: String
+  * Customer notes
+  * Example: Fragile, Handle with care, Gate code
+  
+- approved_by: String
+  * Manager ID who approved order
+  * For audit trail
+
+Relationships:
+- placed by → Customer (1 to 1)
+  * Each order placed by one customer
+  
+- approved by → Manager (1 to 1)
+  * Each order approved by one manager
+  
+- has → Payment (1 to 1)
+  * One payment per order
+  * Payment must exist before approval
+  
+- has → ShipmentPicture (1 to *)
+  * Order can have multiple pictures
+  * At least one picture required
+  
+- contains → Parcel (1 to 1..*)
+  * Order contains one or more parcels
+  * Multiple parcels for large shipments
+  
+- has → Assignment (1 to *)
+  * Multiple assignments throughout lifecycle
+  * Pickup assignment, delivery assignment
+  
+- has → Route (1 to 0..1)
+  * Optional route when out for delivery
+  * Created when delivery rider assigned
+  
+- triggers → Notification (1 to *)
+  * Status changes trigger notifications
+  * Multiple notifications per order
+  
+- has → Tracking (1 to *)
+  * Multiple tracking points
+  * Real-time location updates
+  
+- tracks → StatusHistory (1 to *)
+  * Complete audit trail of status changes
+  * One entry per status transition
+
+
+2.2 PAYMENT
+-----------
+Type: Concrete Class
+Color Code: Light Orange (#ffe6cc)
+Purpose: Records payment transactions for orders
+
+Attributes:
+- payment_id: String
+  * Unique payment identifier
+  * Primary key
+  
+- order_id: String
+  * Foreign key to Order
+  * Links payment to specific order
+  
+- amount: Float
+  * Payment amount in system currency
+  * Matches order total_cost
+  
+- payment_method: String
+  * Payment type (Credit Card, Debit Card, PayPal, Bank Transfer, Digital Wallet)
+  * Customer's chosen method
+  
+- payment_date: Date
+  * Transaction timestamp
+  * When payment processed
+  
+- status: String
+  * Payment state (Pending, Paid, Failed, Refunded, Cancelled)
+  * Critical for order approval
+  
+- transaction_id: String
+  * Gateway transaction reference
+  * For reconciliation and disputes
+  
+- gateway_response: String
+  * Response from payment gateway
+  * Success/failure message from processor
+  
+- refund_amount: Float
+  * Amount refunded if applicable
+  * 0.0 if no refund issued
+
+Relationships:
+- has → Order (1 to 1 bidirectional)
+  * Each payment links to exactly one order
+  * Each order has exactly one payment
+
+
+2.3 SHIPMENT PICTURE
+--------------------
+Type: Concrete Class
+Color Code: Light Purple (#e1d5e7)
+Purpose: Stores images of shipments for verification
+
+Attributes:
+- picture_id: String
+  * Unique picture identifier
+  * Primary key
+  
+- order_id: String
+  * Foreign key to Order
+  * Links picture to order
+  
+- image_url: String
+  * Storage location (cloud URL or file path)
+  * Points to actual image file
+  
+- upload_date: Date
+  * Upload timestamp
+  * When picture was added
+  
+- file_size: Integer
+  * Size in bytes
+  * For storage management
+  
+- format: String
+  * Image format (JPG, PNG, HEIC)
+  * Must be supported format
+  
+- uploaded_by: String
+  * User ID who uploaded
+  * Customer or staff member
+
+Relationships:
+- has → Order (many to 1)
+  * Multiple pictures can belong to one order
+  * Each picture belongs to exactly one order
+
+
+2.4 PARCEL
+----------
+Type: Concrete Class
+Color Code: Light Red (#f8cecc)
+Purpose: Physical item being delivered
+
+Attributes:
+- parcel_id: String
+  * Unique parcel identifier
+  * Primary key, barcode/QR code
+  
+- order_id: String
+  * Foreign key to Order
+  * Links parcel to order
+  
+- weight: Float
+  * Weight in kilograms
+  * Affects cost and vehicle assignment
+  
+- dimensions: String
+  * Size (length x width x height in cm)
+  * Format: "30x20x10"
+  
+- status: String
+  * Parcel state (Created, Collected, In Warehouse, In Transit, Delivered)
+  * Independent tracking from order
+  
+- description: String
+  * Item description
+  * What's being delivered
+  
+- fragile: Boolean
+  * Indicates if special handling required
+  * Affects packaging and routing
+  
+- collected_date: Date
+  * Pickup timestamp
+  * When rider collected from customer
+  
+- delivered_date: Date
+  * Delivery completion timestamp
+  * When delivered to recipient
+
+Relationships:
+- contains → Order (many to 1)
+  * Multiple parcels can belong to one order
+  * Each parcel belongs to exactly one order
+  
+- stored in → Inventory (1 to 0..1)
+  * Parcel may be in warehouse inventory
+  * Optional, only when in warehouse
+
+
+================================================================================
+SECTION 3: OPERATIONAL ENTITIES
+================================================================================
+
+3.1 WAREHOUSE
+-------------
+Type: Concrete Class
+Color Code: Light Cyan (#b1ddf0)
+Purpose: Physical storage facility for parcels in transit
+
+Attributes:
+- warehouse_id: String
+  * Unique warehouse identifier
+  * Primary key
+  
+- name: String
+  * Warehouse name
+  * Example: "Central Hub", "North Depot"
+  
+- location: String
+  * Geographic address
+  * Complete address with coordinates
+  
+- capacity: Integer
+  * Maximum parcel storage capacity
+  * Total available space
+  
+- current_stock: Integer
+  * Current number of parcels stored
+  * Must be ≤ capacity
+  
+- manager_id: String
+  * Foreign key to warehouse manager
+  * Responsible staff member
+  
+- operating_hours: String
+  * Business hours
+  * Format: "08:00-20:00" or "24/7"
+
+Relationships:
+- manages → Inventory (1 to *)
+  * Warehouse manages multiple inventory records
+  * Each inventory entry belongs to one warehouse
+
+
+3.2 INVENTORY
+-------------
+Type: Concrete Class
+Color Code: Teal (#b0e3e6)
+Purpose: Tracks parcels while in warehouse
+
+Attributes:
+- inventory_id: String
+  * Unique inventory record identifier
+  * Primary key
+  
+- warehouse_id: String
+  * Foreign key to Warehouse
+  * Which warehouse holds the parcel
+  
+- parcel_id: String
+  * Foreign key to Parcel
+  * Which parcel is stored
+  
+- status: String
+  * Inventory state (Received, Stored, Ready for Dispatch, Dispatched)
+  * Tracks warehouse processing
+  
+- entry_date: Date
+  * When parcel entered warehouse
+  * Timestamp of receipt
+  
+- exit_date: Date
+  * When parcel left warehouse
+  * Null while still in warehouse
+  
+- location_in_warehouse: String
+  * Bin/shelf location
+  * Example: "A-12", "Zone-B-Shelf-5"
+  * Used for quick retrieval
+
+Relationships:
+- stored in → Parcel (many to 1)
+  * Multiple inventory records possible per parcel (if re-warehoused)
+  * Each inventory entry tracks one parcel
+  
+- managed by → Warehouse (many to 1)
+  * Multiple inventory entries per warehouse
+  * Each entry belongs to one warehouse
+
+
+3.3 ASSIGNMENT
+--------------
+Type: Concrete Class
+Color Code: Tan (#fad7ac)
+Purpose: Links orders to dispatchers and riders
+
+Attributes:
+- assignment_id: String
+  * Unique assignment identifier
+  * Primary key
+  
+- order_id: String
+  * Foreign key to Order
+  * Which order is being assigned
+  
+- dispatcher_id: String
+  * Foreign key to Dispatcher
+  * Who created the assignment
+  
+- rider_id: String
+  * Foreign key to Rider
+  * Who is assigned the task
+  
+- assignment_type: String
+  * Type of assignment (Pickup, Delivery)
+  * Determines rider's task
+  
+- assignment_date: Date
+  * When assignment created
+  * Timestamp of assignment
+  
+- status: String
+  * Assignment state (Pending, Confirmed, In Progress, Completed, Rejected)
+  * Tracks assignment lifecycle
+  
+- confirmed_date: Date
+  * When rider confirmed assignment
+  * Null until confirmed
+
+Relationships:
+- has → Order (many to 1)
+  * Multiple assignments per order (pickup, delivery)
+  * Each assignment for one order
+  
+- created by → Dispatcher (many to 1)
+  * Dispatcher creates multiple assignments
+  * Each assignment created by one dispatcher
+  
+- received by → Rider (many to 1)
+  * Rider receives multiple assignments
+  * Each assignment goes to one rider
+
+
+3.4 ROUTE
+---------
+Type: Concrete Class
+Color Code: Light Coral (#fad9d5)
+Purpose: Optimized path for delivery
+
+Attributes:
+- route_id: String
+  * Unique route identifier
+  * Primary key
+  
+- order_id: String
+  * Foreign key to Order
+  * Which order this route serves
+  
+- rider_id: String
+  * Foreign key to Rider
+  * Who is following this route
+  
+- start_location: String
+  * Starting point (usually warehouse)
+  * GPS coordinates or address
+  
+- end_location: String
+  * Destination (delivery address)
+  * GPS coordinates or address
+  
+- estimated_arrival: Date
+  * Predicted completion time
+  * Based on distance and traffic
+  
+- distance: Float
+  * Total route distance in kilometers
+  * Used for cost calculation
+
+Relationships:
+- has → Order (many to 1)
+  * Multiple routes possible per order (if rerouted)
+  * Each route serves one order
+  
+- followed by → Rider (many to 1)
+  * Rider follows multiple routes
+  * Each route assigned to one rider
+
+
+================================================================================
+SECTION 4: TRACKING & COMMUNICATION ENTITIES
+================================================================================
+
+4.1 NOTIFICATION
+----------------
+Type: Concrete Class
+Color Code: Light Lavender (#d0cee2)
+Purpose: Customer alerts and status updates
+
+Attributes:
+- notification_id: String
+  * Unique notification identifier
+  * Primary key
+  
+- customer_id: String
+  * Foreign key to Customer
+  * Recipient of notification
+  
+- order_id: String
+  * Foreign key to Order
+  * Related order
+  
+- message: String
+  * Notification content
+  * Human-readable message
+  
+- type: String
+  * Channel (SMS, Email, Push, In-App)
+  * How notification is sent
+  
+- sent_date: Date
+  * When notification sent
+  * Timestamp of sending
+  
+- status: String
+  * Notification state (Pending, Sent, Delivered, Failed)
+  * Delivery confirmation
+  
+- delivery_status: String
+  * Receipt confirmation
+  * Did customer receive it?
+
+Relationships:
+- received by → Customer (many to 1)
+  * Customer receives multiple notifications
+  * Each notification goes to one customer
+  
+- triggered by → Order (many to 1)
+  * Multiple notifications per order
+  * Each notification relates to one order
+
+
+4.2 TRACKING
+------------
+Type: Concrete Class
+Color Code: Blue-Gray (#bac8d3)
+Purpose: Real-time location tracking
+
+Attributes:
+- tracking_id: String
+  * Unique tracking point identifier
+  * Primary key
+  
+- order_id: String
+  * Foreign key to Order
+  * Which order is being tracked
+  
+- location: String
+  * Human-readable location
+  * Address or landmark
+  
+- latitude: Float
+  * GPS latitude coordinate
+  * Decimal degrees (-90 to +90)
+  
+- longitude: Float
+  * GPS longitude coordinate
+  * Decimal degrees (-180 to +180)
+  
+- timestamp: Date
+  * When location recorded
+  * Time of GPS reading
+  
+- status: String
+  * What's happening at this location
+  * Example: "Picked up", "In transit", "Arriving soon"
+
+Relationships:
+- has → Order (many to 1)
+  * Multiple tracking points per order
+  * Each tracking point for one order
+
+
+4.3 STATUS HISTORY
+------------------
+Type: Concrete Class
+Color Code: Gray (#f5f5f5)
+Purpose: Audit trail of order status changes
+
+Attributes:
+- history_id: String
+  * Unique history record identifier
+  * Primary key
+  
+- order_id: String
+  * Foreign key to Order
+  * Which order changed
+  
+- old_status: String
+  * Previous status value
+  * Before the change
+  
+- new_status: String
+  * New status value
+  * After the change
+  
+- changed_by: String
+  * User ID who made change
+  * Actor responsible (rider, dispatcher, system)
+  
+- change_date: Date
+  * When status changed
+  * Timestamp of transition
+  
+- reason: String
+  * Optional explanation
+  * Why status changed
+
+Relationships:
+- tracks → Order (many to 1)
+  * Multiple history records per order
+  * Each record tracks one order
+
+
+4.4 REPORT
+----------
+Type: Concrete Class
+Color Code: Light Lime (#cdeb8b)
+Purpose: Analytics and business intelligence
+
+Attributes:
+- report_id: String
+  * Unique report identifier
+  * Primary key
+  
+- type: String
+  * Report category
+  * Values: Delivery Performance, Payment Summary, Rider Performance, Order Analytics
+  
+- generated_by: String
+  * User ID who created report
+  * Manager or Admin
+  
+- generated_date: Date
+  * When report created
+  * Timestamp of generation
+  
+- start_date: Date
+  * Report period start
+  * Beginning of data range
+  
+- end_date: Date
+  * Report period end
+  * End of data range
+  
+- data: String
+  * Report content/results
+  * Could be JSON, XML, or serialized data
+  
+- format: String
+  * Output format (PDF, Excel, CSV, HTML)
+  * How report is presented
+
+Relationships:
+- generated by → Manager (many to 1)
+  * Manager generates multiple reports
+  * Each report created by one manager
+  
+- generated by → Admin (many to 1)
+  * Admin generates multiple reports
+  * Each report created by one admin
+
+
+================================================================================
+SECTION 5: RELATIONSHIP SUMMARY
+================================================================================
+
+5.1 INHERITANCE RELATIONSHIPS (IS-A)
+-------------------------------------
+User (abstract base class)
+├── Customer
+├── Manager
+├── Dispatcher
+├── Rider
+└── Admin
+
+All user types inherit:
+- user_id, username, password, email, phone
+- account_status, created_date, last_login
+
+
+5.2 KEY ASSOCIATIONS (HAS-A / USES)
+------------------------------------
+
+Customer Relationships:
+- Customer places Order (1:*)
+- Customer receives Notification (1:*)
+
+Manager Relationships:
+- Manager approves Order (1:*)
+- Manager delegates to Dispatcher (many:many implied)
+- Manager generates Report (1:*)
+
+Dispatcher Relationships:
+- Dispatcher creates Assignment (1:*)
+
+Rider Relationships:
+- Rider receives Assignment (1:*)
+- Rider follows Route (1:*)
+
+Order Relationships (CENTRAL HUB):
+- Order has Payment (1:1)
+- Order has ShipmentPicture (1:*)
+- Order contains Parcel (1:1..*)
+- Order has Assignment (1:*)
+- Order has Route (1:0..1)
+- Order triggers Notification (1:*)
+- Order has Tracking (1:*)
+- Order tracks StatusHistory (1:*)
+
+Parcel Relationships:
+- Parcel stored in Inventory (1:0..1)
+
+Warehouse Relationships:
+- Warehouse manages Inventory (1:*)
+
+Admin Relationships:
+- Admin generates Report (1:*)
+
+
+5.3 MULTIPLICITIES EXPLANATION
+-------------------------------
+
+Notation: (min..max)
+- 1 = exactly one (mandatory)
+- * = zero or many
+- 0..1 = optional (zero or one)
+- 1..* = one or many (at least one required)
+
+Examples:
+- Customer places Order (1:*)
+  * One customer can place zero or many orders
+  * Each order must be placed by exactly one customer
+
+- Order contains Parcel (1:1..*)
+  * One order contains at least one parcel (could be multiple)
+  * Each parcel belongs to exactly one order
+
+- Parcel stored in Inventory (1:0..1)
+  * One parcel may or may not be in inventory (optional)
+  * When in inventory, stored in exactly one warehouse
+
+
+================================================================================
+SECTION 6: DOMAIN MODEL DESIGN PRINCIPLES
+================================================================================
+
+6.1 NORMALIZATION
+-----------------
+- Each entity has a unique identifier (primary key)
+- Foreign keys establish relationships
+- No redundant data storage
+- Attributes are atomic (single-valued)
+
+6.2 ABSTRACTION
+---------------
+- User is abstract base class
+- Concrete user types inherit common attributes
+- Promotes code reuse and consistency
+
+6.3 ENCAPSULATION
+-----------------
+- Each entity encapsulates related attributes
+- Responsibilities are clear and separated
+- Order is central entity coordinating workflow
+
+6.4 BUSINESS RULES ENCODED
+---------------------------
+- Payment must exist before order approval (1:1 mandatory)
+- Order must have at least one parcel (1..*)
+- Parcel only in inventory while in warehouse (0..1 optional)
+- Multiple status changes tracked (1:* history)
+
+6.5 SCALABILITY CONSIDERATIONS
+-------------------------------
+- Assignment entity allows flexible dispatcher-rider-order links
+- Tracking allows unlimited location points
+- StatusHistory provides complete audit trail
+- Notification supports multi-channel delivery
+
+
+================================================================================
+SECTION 7: COLOR CODING SCHEME
+================================================================================
+
+Entity Type Categories:
+------------------------
+Light Blue (#dae8fc)    - Abstract User base class
+Light Green (#d5e8d4)   - Concrete User types (Customer, Manager, etc.)
+Yellow (#fff2cc)        - Core Order entity
+Light Orange (#ffe6cc)  - Payment entity
+Light Purple (#e1d5e7)  - Media/Picture entity
+Light Red (#f8cecc)     - Parcel and physical items
+Light Cyan (#b1ddf0)    - Warehouse entities
+Teal (#b0e3e6)          - Inventory management
+Tan (#fad7ac)           - Assignment coordination
+Light Coral (#fad9d5)   - Route planning
+Light Lavender (#d0cee2) - Notification/Communication
+Blue-Gray (#bac8d3)     - Tracking/Location
+Gray (#f5f5f5)          - Audit/History
+Light Lime (#cdeb8b)    - Reporting/Analytics
+
+
+================================================================================
+SECTION 8: TYPICAL WORKFLOW THROUGH DOMAIN MODEL
+================================================================================
+
+Order Lifecycle Example:
+------------------------
+
+1. Customer (User) places Order
+   - Creates Order entity
+   - Uploads ShipmentPicture
+   - Order status: "Created"
+
+2. Customer makes Payment
+   - Creates Payment entity
+   - Links to Order
+   - Order status: "Paid"
+
+3. Manager (User) reviews Order
+   - Checks Payment status
+   - Reviews ShipmentPicture
+   - Approves Order
+   - Order.approved_by = manager_id
+   - Order status: "Approved"
+   - Creates StatusHistory record
+
+4. Manager delegates to Dispatcher
+   - Order status: "Assigned to Dispatcher"
+
+5. Dispatcher (User) creates Assignment
+   - Links Order to Rider (pickup)
+   - Assignment type: "Pickup"
+   - Order status: "Pickup Assigned"
+
+6. Rider (User) collects Parcel
+   - Updates Parcel status: "Collected"
+   - Creates Tracking points
+   - Order status: "In Warehouse"
+
+7. Warehouse receives Parcel
+   - Creates Inventory entry
+   - Records location_in_warehouse
+   - Parcel.status: "In Warehouse"
+
+8. Warehouse dispatches for delivery
+   - Creates new Assignment (delivery rider)
+   - Creates Route entity
+   - Updates Inventory.exit_date
+   - Order status: "Out for Delivery"
+   - Triggers Notification to Customer
+
+9. Delivery Rider follows Route
+   - Updates Tracking with GPS coordinates
+   - Customer can view real-time location
+
+10. Delivery completed
+    - Order status: "Delivered"
+    - Parcel.delivered_date = now
+    - Creates final StatusHistory entry
+    - Triggers final Notification
+
+11. Manager/Admin generates Report
+    - Analyzes completed orders
+    - Creates Report entity
+    - Reviews performance metrics
+
+
+================================================================================
+END OF DOMAIN MODEL DESCRIPTION
+================================================================================
+
+SUMMARY:
+--------
+This domain model provides a comprehensive object-oriented representation of
+the End-to-End Delivery Management System with:
+
+✓ 15 main entity classes
+✓ 120+ attributes across all entities
+✓ 25+ relationships (associations)
+✓ Clear inheritance hierarchy (5 user types)
+✓ Proper multiplicities and constraints
+✓ Complete order lifecycle coverage
+✓ Audit trail capability (StatusHistory)
+✓ Real-time tracking support
+✓ Multi-channel notification system
+✓ Warehouse inventory management
+✓ Comprehensive reporting framework
+
+The model supports all 12 use cases documented in the system sequence diagrams
+and provides a solid foundation for database design and application development.
+

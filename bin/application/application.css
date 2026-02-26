@@ -1,0 +1,222 @@
+.login-root {
+    -fx-background-color: #0f172a;
+}
+
+.login-background {
+    -fx-background-radius: 0;
+    -fx-background-color:
+        linear-gradient(to bottom right, #0b1f3a 0%, #162447 35%, #1f2a52 65%, #283a6b 100%);
+    -fx-opacity: 0.95;
+}
+
+.login-shell {
+    -fx-background-color: transparent;
+}
+
+.hero-panel {
+    -fx-padding: 20 35 20 35;
+    -fx-background-color: rgba(17, 25, 40, 0.75);
+    -fx-background-radius: 28;
+    -fx-effect: dropshadow(gaussian, rgba(15,23,42,0.5), 35, 0.25, 0, 20);
+    -fx-text-fill: white;
+}
+
+.hero-badge {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #7dd3fc;
+    -fx-background-color: rgba(125,211,252,0.16);
+    -fx-padding: 8 16 8 16;
+    -fx-background-radius: 999;
+}
+
+.hero-title {
+    -fx-text-fill: #e2e8f0;
+    -fx-font-size: 32px;
+    -fx-font-weight: 700;
+}
+
+.hero-copy {
+    -fx-text-fill: #cbd5f5;
+    -fx-font-size: 14px;
+    -fx-line-spacing: 2;
+}
+
+.section-title {
+    -fx-text-fill: #f8fafc;
+    -fx-font-size: 13px;
+    -fx-letter-spacing: 1.2px;
+    -fx-opacity: 0.9;
+}
+
+.feature-item {
+    -fx-padding: 12;
+    -fx-background-color: rgba(15,23,42,0.55);
+    -fx-background-radius: 18;
+}
+
+.feature-icon {
+    -fx-font-size: 20px;
+}
+
+.feature-title {
+    -fx-text-fill: #f8fafc;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+}
+
+.feature-desc {
+    -fx-text-fill: #94a3b8;
+    -fx-font-size: 12px;
+}
+
+.stat-card {
+    -fx-background-color: rgba(15,23,42,0.65);
+    -fx-background-radius: 18;
+    -fx-padding: 14 22 14 22;
+}
+
+.stat-card.accent {
+    -fx-background-color: linear-gradient(to bottom right, #0ea5e9, #2563eb);
+}
+
+.stat-value {
+    -fx-text-fill: #f8fafc;
+    -fx-font-size: 26px;
+    -fx-font-weight: 700;
+}
+
+.stat-label {
+    -fx-text-fill: rgba(226,232,240,0.8);
+    -fx-font-size: 12px;
+}
+
+.compliance-card {
+    -fx-background-color: rgba(15,23,42,0.5);
+    -fx-background-radius: 18;
+    -fx-padding: 16 20 16 20;
+}
+
+.compliance-title {
+    -fx-text-fill: #f8fafc;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+}
+
+.compliance-desc {
+    -fx-text-fill: #a5b4fc;
+    -fx-font-size: 12px;
+    -fx-wrap-text: true;
+}
+
+.form-panel {
+    -fx-padding: 32 38 32 38;
+    -fx-background-color: rgba(248,250,252,0.98);
+    -fx-background-radius: 32;
+    -fx-effect: dropshadow(gaussian, rgba(15,23,42,0.2), 40, 0.35, 0, 20);
+}
+
+.form-title {
+    -fx-text-fill: #0f172a;
+    -fx-font-size: 28px;
+    -fx-font-weight: 700;
+}
+
+.form-subtitle {
+    -fx-text-fill: #475569;
+    -fx-font-size: 13px;
+}
+
+.input-label {
+    -fx-text-fill: #0f172a;
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+    -fx-letter-spacing: 0.4px;
+}
+
+.input-wrapper {
+    -fx-padding: 0 14 0 14;
+    -fx-background-color: #edf2ff;
+    -fx-background-radius: 16;
+    -fx-border-color: transparent;
+    -fx-border-radius: 16;
+}
+
+.input-icon {
+    -fx-font-size: 18px;
+}
+
+.input-field {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-font-size: 14px;
+    -fx-text-fill: #0f172a;
+    -fx-prompt-text-fill: #94a3b8;
+}
+
+.input-field:focused {
+    -fx-effect: dropshadow(gaussian, rgba(37,99,235,0.3), 10, 0.4, 0, 2);
+}
+
+.combo {
+    -fx-background-color: #edf2ff;
+    -fx-background-radius: 16;
+    -fx-border-color: transparent;
+    -fx-font-size: 14px;
+    -fx-text-fill: #0f172a;
+    -fx-padding: 0 12 0 12;
+}
+
+.primary-button {
+    -fx-background-color: linear-gradient(to right, #2563eb, #14b8a6);
+    -fx-background-radius: 18;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: 700;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(37,99,235,0.35), 25, 0.4, 0, 12);
+}
+
+.primary-button:hover {
+    -fx-opacity: 0.9;
+}
+
+.support-link {
+    -fx-text-fill: #2563eb;
+    -fx-font-size: 12px;
+}
+
+.cta-link {
+    -fx-text-fill: #2563eb;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+}
+
+.status-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #dc2626;
+    -fx-font-weight: 600;
+}
+
+.test-card {
+    -fx-background-color: rgba(226,232,240,0.7);
+    -fx-background-radius: 20;
+    -fx-padding: 16 20 18 20;
+}
+
+.test-title {
+    -fx-text-fill: #0f172a;
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+}
+
+.test-key {
+    -fx-text-fill: #475569;
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+}
+
+.test-value {
+    -fx-text-fill: #1e293b;
+    -fx-font-size: 12px;
+}

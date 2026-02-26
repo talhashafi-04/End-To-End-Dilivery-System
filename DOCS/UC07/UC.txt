@@ -1,0 +1,24 @@
+7. Pickup Rider Collects Parcel from CustomerUse Case Name: Collect Parcel​
+Scope: Delivery Management System​
+Level: User goal​
+Primary Actor: Pickup Rider​
+Stakeholders and their Interests:
+●​ Pickup Rider: Accurate and efficient collection.​
+●​ Customer: Parcel collected on time.​
+●​ Business: Parcel enters delivery process.​
+Preconditions:
+●​ Pickup rider assigned.​
+●​ Customer is ready with parcel.​
+Postconditions:
+●​ Parcel collected.​
+●​ Order status updated to “In Warehouse” or “Ready for Dispatch.”​
+Main Success Scenario:
+1.​ Rider receives assignment notification.​
+2.​ Rider navigates to the customer’s location.​
+3.​ Rider verifies customer identity and parcel details.​
+4.​ Rider collects the parcel.​
+5.​ Rider confirms collection in the system.​
+6.​ System updates order status to “In Warehouse” or “Ready for Dispatch.”​
+7.​ System notifies the customer of successful collection.​
+Extensions:●​ If customer unavailable then reschedule.​
+●​ If parcel is incomplete or damaged then rider reports issue.​

@@ -1,0 +1,1341 @@
+================================================================================
+    SEQUENCE DIAGRAM DESCRIPTIONS - DELIVERY MANAGEMENT SYSTEM
+    Complete Documentation of All Use Cases (UC01-UC12)
+================================================================================
+
+================================================================================
+UC01: AUTHENTICATE USER - SEQUENCE DIAGRAM DESCRIPTION
+================================================================================
+
+Participants:
+1. User (Customer, Manager, Dispatcher, or Rider) - Actor
+2. Web/Mobile App - Interface
+3. Auth Service - Authentication handler
+4. User Service - User data management
+5. Database - Data storage
+6. Session Service - Session management
+7. Audit Service - Logging service
+8. Dashboard Service - Dashboard provider
+
+Main Flow:
+----------
+1. User -> Web/Mobile App: Navigate to login page
+   - User initiates login process
+
+2. Web/Mobile App -> User: displayLoginForm()
+   - System displays login form with username and password fields
+
+3. User -> Web/Mobile App: Enter username and password
+   - User provides credentials
+
+4. User -> Web/Mobile App: Click "Login" button
+   - User submits authentication request
+
+5. Web/Mobile App -> Auth Service: authenticate(username, password)
+   - Application sends credentials to authentication service
+   - Note: System validates input format and sanitizes data
+
+6. Auth Service -> User Service: verifyUsername(username)
+   - Verify if username exists in system
+
+7. User Service -> Database: queryUser(username)
+   - Query database for user record
+
+8. Database -> User Service: userData(userId, hashedPassword, status, role)
+   - Return user data including hashed password, account status, and role
+
+9. User Service -> Auth Service: userExists(true)
+   - Confirm username is valid
+
+10. Auth Service -> User Service: verifyPassword(password, hashedPassword)
+    - Verify password against stored hash
+    - Note: Hash password using bcrypt/argon2 and compare with stored hash
+
+11. User Service -> Auth Service: passwordMatch(true)
+    - Confirm password is correct
+
+12. Auth Service -> User Service: checkAccountStatus(userId)
+    - Verify account is active and not locked
+
+13. User Service -> Database: getAccountStatus(userId)
+    - Query account status from database
+
+14. Database -> User Service: accountStatus(active, notLocked)
+    - Return account status information
+
+15. User Service -> Auth Service: statusValid(true)
+    - Confirm account status is valid
+
+16. Auth Service -> Session Service: createSession(userId, role)
+    - Create new session for authenticated user
+
+17. Session Service -> Session Service: generateToken(userId, role, permissions)
+    - Generate JWT token containing:
+      * User ID
+      * Role (Customer/Manager/Dispatcher/Rider)
+      * Expiration timestamp
+      * Permissions based on role
+
+18. Session Service -> Auth Service: sessionToken(token, expiresAt)
+    - Return generated session token with expiration
+
+19. Auth Service -> Audit Service: logLoginAttempt(userId, success, timestamp, ipAddress)
+    - Log successful login attempt for security audit
+
+20. Audit Service -> Auth Service: logRecorded
+    - Confirm audit log entry created
+
+21. Auth Service -> Web/Mobile App: authenticationSuccess(token, role)
+    - Return success with session token and user role
+
+22. Web/Mobile App -> Dashboard Service: loadDashboard(role)
+    - Request appropriate dashboard based on user role
+
+23. Dashboard Service -> User: displayDashboard(dashboardContent)
+    - Display role-specific dashboard (Customer/Manager/Dispatcher/Rider)
+
+Alternative Flows:
+------------------
+ALT 1: [Invalid credentials]
+- Auth Service -> Web/Mobile App: displayError("Invalid username or password")
+- Web/Mobile App -> User: allowRetryOrPasswordReset()
+- User can retry login or request password reset
+
+ALT 2: [Account locked]
+- User Service -> Web/Mobile App: displayError("Account locked. Contact admin.")
+- System prevents login due to multiple failed attempts
+- User must contact administrator to unlock account
+
+
+================================================================================
+UC02: PLACE DELIVERY ORDER - SEQUENCE DIAGRAM DESCRIPTION
+================================================================================
+
+Participants:
+1. Customer - Actor
+2. Web/Mobile App - Interface
+3. Order Service - Order management
+4. Validation Service - Data validation
+5. Media Service - Image handling
+6. File Storage - Cloud/local storage
+7. Database - Data persistence
+8. Notification Service - Alert system
+9. Manager - Approval authority
+
+Main Flow:
+----------
+1. Customer -> Web/Mobile App: Navigate to "Place Order" page
+   - Customer initiates order creation
+
+2. Web/Mobile App -> Customer: displayOrderForm()
+   - Display order form with required fields
+
+3. Customer -> Web/Mobile App: Select items and enter delivery details
+   - Customer enters:
+     * Pickup address
+     * Delivery address
+     * Item description
+     * Weight/dimensions
+     * Delivery instructions
+
+4. Customer -> Web/Mobile App: Upload required picture
+   - Customer uploads photo of shipment
+
+5. Web/Mobile App -> Media Service: validateImage(file)
+   - Validate image file
+   - Checks:
+     * File format (JPG/PNG)
+     * File size limit
+     * Image dimensions
+     * Virus scan
+
+6. Media Service -> Web/Mobile App: validationSuccess()
+   - Image validation passed
+
+7. Media Service -> File Storage: uploadImage(file)
+   - Upload image to storage system
+
+8. File Storage -> Media Service: imageUrl(storageUrl)
+   - Return URL/path of uploaded image
+
+9. Media Service -> Web/Mobile App: imageUploaded(url)
+   - Confirm image upload with storage URL
+
+10. Customer -> Web/Mobile App: Review order summary
+    - Customer reviews all entered information
+
+11. Web/Mobile App -> Customer: displayOrderSummary(orderDetails, imagePreview)
+    - Show complete order summary with image preview
+
+12. Customer -> Web/Mobile App: Submit order
+    - Customer confirms and submits order
+
+13. Web/Mobile App -> Order Service: createOrder(orderData, imageUrl)
+    - Send order creation request with all data
+
+14. Order Service -> Validation Service: validateOrderFields(orderData)
+    - Validate all order fields:
+      * All required fields present
+      * Address format valid
+      * Phone numbers valid
+      * Weight/dimensions reasonable
+
+15. Validation Service -> Order Service: validationSuccess()
+    - All fields validated successfully
+
+16. Order Service -> Database: saveOrder(orderData)
+    - Persist order to database with status "Pending Approval"
+
+17. Database -> Order Service: orderId(newOrderId)
+    - Return newly created order ID
+
+18. Order Service -> Web/Mobile App: orderCreated(orderId)
+    - Confirm order creation
+
+19. Order Service -> Notification Service: notifyManager(orderId, "Pending Approval")
+    - Trigger notification to manager for approval
+
+20. Notification Service -> Manager: sendNotification(managerId, orderDetails)
+    - Send notification to manager about new order requiring approval
+
+21. Web/Mobile App -> Customer: confirmOrderPlacement(orderId, status)
+    - Display success message:
+      "Order placed successfully!"
+      "Order ID: #XXX"
+      "Awaiting approval"
+
+Alternative Flows:
+------------------
+ALT 1: [Picture upload fails]
+- Media Service -> Web/Mobile App: displayError("Image upload failed")
+- Customer can retry upload
+
+ALT 2: [Order details incomplete]
+- Validation Service -> Web/Mobile App: promptMissingFields(missingFields)
+- System highlights missing/invalid fields
+- Customer corrects and resubmits
+
+
+================================================================================
+UC03: PROCESS PAYMENT - SEQUENCE DIAGRAM DESCRIPTION
+================================================================================
+
+Participants:
+1. Customer - Actor
+2. Web/Mobile App - Interface
+3. Payment Service - Payment handler
+4. Order Service - Order management
+5. Validation Service - Payment validation
+6. Payment Gateway - External payment processor
+7. Database - Data storage
+8. Notification Service - Alert system
+
+Main Flow:
+----------
+1. Customer -> Web/Mobile App: Select order to pay
+   - Customer selects pending order for payment
+
+2. Web/Mobile App -> Order Service: getOrderDetails(orderId)
+   - Request order information
+
+3. Order Service -> Database: queryOrder(orderId)
+   - Query order from database
+
+4. Database -> Order Service: orderData(amount, status)
+   - Return order details including total amount
+
+5. Order Service -> Customer: displayPaymentOptions(amount)
+   - Display available payment methods:
+     * Credit/Debit Card
+     * PayPal
+     * Bank Transfer
+     * Digital Wallet
+
+6. Customer -> Web/Mobile App: Choose payment method
+   - Customer selects preferred payment method
+
+7. Customer -> Web/Mobile App: Enter payment details
+   - Customer provides payment information (card details, etc.)
+
+8. Web/Mobile App -> Payment Service: initiatePayment(orderId, paymentMethod, details)
+   - Submit payment request
+
+9. Payment Service -> Validation Service: validatePaymentInfo(details)
+   - Validate payment information:
+     * Card number format
+     * CVV
+     * Expiry date
+     * Billing address
+     * Fraud detection checks
+
+10. Validation Service -> Payment Service: validationSuccess()
+    - Payment information is valid
+
+11. Payment Service -> Database: createPaymentRecord(orderId, amount, method)
+    - Create payment transaction record
+
+12. Database -> Payment Service: paymentId(transactionId)
+    - Return unique transaction ID
+
+13. Payment Service -> Payment Gateway: processTransaction(transactionId, amount, details)
+    - Send payment to gateway for processing
+    - Gateway processes:
+      * Authorization
+      * Fraud check
+      * 3D Secure authentication (if needed)
+      * Charge account
+
+14. Payment Gateway -> Payment Service: paymentConfirmation(status, gatewayRef)
+    - Return payment result with gateway reference
+
+15. Payment Service -> Database: updatePaymentStatus(transactionId, "Paid", gatewayRef)
+    - Update payment record with success status
+
+16. Payment Service -> Order Service: updateOrderStatus(orderId, "Paid")
+    - Update order status to paid
+
+17. Order Service -> Database: saveStatus(orderId, "Paid")
+    - Persist order status change
+
+18. Payment Service -> Notification Service: notifyCustomer(orderId, "Payment Success")
+    - Trigger customer notification
+
+19. Notification Service -> Customer: sendNotification(customerId, message)
+    - Send payment confirmation to customer
+
+20. Payment Service -> Web/Mobile App: paymentSuccess(transactionId)
+    - Return success status
+
+21. Web/Mobile App -> Customer: displaySuccess("Payment processed successfully")
+    - Show success message with transaction details
+
+Alternative Flows:
+------------------
+ALT 1: [Payment declined]
+- Payment Gateway -> Payment Service: paymentFailed(reason)
+- Payment Service -> Web/Mobile App: allowRetryOrSelectAnother()
+- Customer can retry with same method or choose different payment method
+
+ALT 2: [Gateway unavailable]
+- Payment Service -> Web/Mobile App: displayError("Payment service unavailable. Try later.")
+- System cannot process payment due to gateway issues
+- Customer must retry later
+
+
+================================================================================
+UC04: APPROVE DELIVERY ORDER - SEQUENCE DIAGRAM DESCRIPTION
+================================================================================
+
+Participants:
+1. Manager - Actor
+2. Web App - Interface
+3. Order Service - Order management
+4. Payment Service - Payment verification
+5. Policy Check Service - Compliance verification
+6. Media Service - Image retrieval
+7. Database - Data storage
+8. Notification Service - Alert system
+9. Dispatch Service - Dispatch triggering
+
+Main Flow:
+----------
+1. Manager -> Web App: Navigate to "Pending Orders"
+   - Manager accesses pending orders view
+
+2. Web App -> Order Service: getPendingOrders()
+   - Request list of orders awaiting approval
+
+3. Order Service -> Database: queryPendingOrders(status="Paid")
+   - Query orders with "Paid" status
+
+4. Database -> Order Service: pendingOrdersList(orders)
+   - Return list of pending orders
+
+5. Order Service -> Manager: displayPendingOrders(orderList)
+   - Display pending orders for review
+
+6. Manager -> Web App: Select order to review (orderId)
+   - Manager selects specific order
+
+7. Web App -> Order Service: getOrderDetails(orderId)
+   - Request complete order information
+
+8. Order Service -> Database: queryOrderDetails(orderId)
+   - Query full order details
+
+9. Database -> Order Service: orderData(details, customerId)
+   - Return complete order information
+
+10. Order Service -> Payment Service: verifyPayment(orderId)
+    - Verify payment has been processed
+
+11. Payment Service -> Database: getPaymentStatus(orderId)
+    - Query payment record
+
+12. Database -> Payment Service: paymentConfirmed(transactionId, amount)
+    - Return payment confirmation details
+
+13. Payment Service -> Order Service: paymentVerified()
+    - Confirm payment is valid
+
+14. Order Service -> Media Service: getShipmentPicture(orderId)
+    - Request shipment image
+
+15. Media Service -> Database: retrieveImage(imageUrl)
+    - Retrieve image URL from database
+
+16. Database -> Media Service: imageData(url)
+    - Return image storage URL
+
+17. Media Service -> Order Service: pictureRetrieved(imageUrl)
+    - Return image URL for display
+
+18. Order Service -> Manager: displayOrderForReview(details, payment, picture)
+    - Display complete order information:
+      * Payment confirmed
+      * Order details valid
+      * Shipment picture
+      * Policy compliance status
+
+19. Web App -> Policy Check Service: checkPolicyCompliance(orderDetails)
+    - Verify order meets policies:
+      * Prohibited items check
+      * Size/weight limits
+      * Destination restrictions
+      * Documentation requirements
+
+20. Policy Check Service -> Web App: complianceResult(approved)
+    - Return compliance check result
+
+21. Manager -> Web App: Approve order
+    - Manager approves the order
+
+22. Web App -> Order Service: approveOrder(orderId, managerId)
+    - Submit approval
+
+23. Order Service -> Database: updateOrderStatus(orderId, "Approved", managerId)
+    - Update order status with manager ID
+
+24. Database -> Order Service: statusUpdated()
+    - Confirm status change
+
+25. Order Service -> Notification Service: notifyCustomer(orderId, "Approved")
+    - Notify customer of approval
+
+26. Order Service -> Dispatch Service: triggerDispatch(orderId)
+    - Trigger dispatch workflow
+
+Alternative Flows:
+------------------
+ALT 1: [Order incomplete or rejected]
+- Web App -> Order Service: requestCorrections(orderId, issues)
+- Manager requests corrections from customer
+
+ALT 2: [Order rejected]
+- Order Service -> Notification Service: updateStatus("Rejected") & notifyCustomer()
+- Customer is notified of rejection with reasons
+
+
+================================================================================
+UC05: MANAGER DELEGATES ORDER TO DISPATCHER - SEQUENCE DIAGRAM DESCRIPTION
+================================================================================
+
+Participants:
+1. Manager - Actor
+2. Web App - Interface
+3. Order Service - Order management
+4. Dispatcher Service - Dispatcher management
+5. Database - Data storage
+6. Assignment Service - Assignment management
+7. Notification Service - Alert system
+8. Dispatcher - Receiving actor
+
+Main Flow:
+----------
+1. Manager -> Web App: View approved orders awaiting assignment
+   - Manager accesses approved orders list
+
+2. Web App -> Order Service: getApprovedOrders(status="Approved")
+   - Request approved orders not yet assigned
+
+3. Order Service -> Database: queryOrders(status, notAssigned)
+   - Query approved orders without dispatcher assignment
+
+4. Database -> Order Service: approvedOrdersList(orders)
+   - Return list of orders
+
+5. Order Service -> Manager: displayOrders(orderList)
+   - Display orders awaiting delegation
+
+6. Manager -> Web App: Select order to delegate (orderId)
+   - Manager selects specific order
+
+7. Web App -> Dispatcher Service: checkDispatcherAvailability()
+   - Check which dispatchers are available
+
+8. Dispatcher Service -> Database: getAvailableDispatchers()
+   - Query dispatcher availability
+   - Checks:
+     * Active status
+     * Current workload
+     * Shift schedule
+     * Location/zone
+
+9. Database -> Dispatcher Service: dispatcherList(dispatchers, workload)
+   - Return available dispatchers with current workload
+
+10. Dispatcher Service -> Web App: availableDispatchers(list)
+    - Return dispatcher list
+
+11. Web App -> Manager: displayDispatchers(list)
+    - Display available dispatchers
+
+12. Manager -> Web App: Assign order to dispatcher (dispatcherId)
+    - Manager selects dispatcher
+
+13. Web App -> Assignment Service: delegateOrder(orderId, dispatcherId, managerId)
+    - Create delegation
+
+14. Assignment Service -> Database: createAssignment(orderId, dispatcherId, timestamp)
+    - Create assignment record
+
+15. Database -> Assignment Service: assignmentCreated(assignmentId)
+    - Return assignment ID
+
+16. Assignment Service -> Order Service: updateOrderStatus(orderId, "Assigned to Dispatcher")
+    - Update order status
+
+17. Order Service -> Database: saveStatus(orderId, status, dispatcherId)
+    - Persist status change
+
+18. Assignment Service -> Notification Service: notifyDispatcher(dispatcherId, orderId)
+    - Trigger notification
+
+19. Notification Service -> Dispatcher: sendNotification(dispatcherId, orderDetails)
+    - Send notification with order details
+
+20. Dispatcher -> Notification Service: Confirm receipt in system
+    - Dispatcher acknowledges assignment
+
+21. Notification Service -> Database: confirmAssignment(assignmentId)
+    - Record confirmation
+
+22. Order Service -> Manager: assignmentConfirmed()
+    - Confirm successful delegation
+
+Alternative Flows:
+------------------
+ALT 1: [No dispatcher available]
+- Dispatcher Service -> Database: queueOrder(orderId)
+- Order is queued until dispatcher becomes available
+
+ALT 2: [Dispatcher rejects]
+- Dispatcher -> Manager: managerReassigns(orderId)
+- Manager must select different dispatcher
+
+
+================================================================================
+UC06: DISPATCHER ASSIGNS PICKUP RIDER - SEQUENCE DIAGRAM DESCRIPTION
+================================================================================
+
+Participants:
+1. Dispatcher - Actor
+2. Web App - Interface
+3. Order Service - Order management
+4. Rider Service - Rider management
+5. Database - Data storage
+6. Assignment Service - Assignment management
+7. Notification Service - Alert system
+8. Pickup Rider - Receiving actor
+
+Main Flow:
+----------
+1. Dispatcher -> Web App: View assigned orders requiring pickup
+   - Dispatcher accesses orders assigned to them
+
+2. Web App -> Order Service: getAssignedOrders(dispatcherId)
+   - Request orders for this dispatcher
+
+3. Order Service -> Database: queryOrders(dispatcherId, status="Assigned to Dispatcher")
+   - Query orders needing pickup assignment
+
+4. Database -> Order Service: assignedOrdersList(orders)
+   - Return order list
+
+5. Order Service -> Dispatcher: displayOrders(orderList)
+   - Display orders requiring pickup
+
+6. Dispatcher -> Web App: Select order (orderId)
+   - Dispatcher selects order to assign
+
+7. Web App -> Rider Service: checkPickupRiderAvailability()
+   - Check available pickup riders
+
+8. Rider Service -> Database: getAvailableRiders(location, time)
+   - Query available riders with criteria:
+     * Active status
+     * Available capacity
+     * Current location (proximity)
+     * Shift schedule
+     * Rating/performance
+
+9. Database -> Rider Service: availableRidersList(riders)
+   - Return available riders
+
+10. Rider Service -> Web App: ridersAvailable(list)
+    - Return rider list
+
+11. Web App -> Dispatcher: displayRiders(list)
+    - Display available riders
+
+12. Dispatcher -> Web App: Assign order to rider (riderId)
+    - Dispatcher selects rider
+
+13. Web App -> Assignment Service: assignPickupRider(orderId, riderId, dispatcherId)
+    - Create rider assignment
+
+14. Assignment Service -> Database: createRiderAssignment(orderId, riderId)
+    - Create assignment record
+
+15. Database -> Assignment Service: assignmentCreated(assignmentId)
+    - Return assignment ID
+
+16. Assignment Service -> Order Service: updateOrderWithRider(orderId, riderId, riderDetails)
+    - Update order with rider information
+
+17. Order Service -> Database: saveRiderDetails(orderId, riderId)
+    - Save rider assignment
+
+18. Order Service -> Database: updateOrderStatus(orderId, "Pickup Assigned")
+    - Update order status
+
+19. Assignment Service -> Notification Service: notifyRider(riderId, orderId, pickupDetails)
+    - Send notification to rider
+    - Notification includes:
+      * Customer location
+      * Pickup time window
+      * Parcel details
+      * Special instructions
+
+20. Notification Service -> Pickup Rider: sendNotification(riderId, assignmentData)
+    - Deliver notification to rider
+
+Alternative Flows:
+------------------
+ALT 1: [No riders available]
+- Rider Service -> Database: scheduleNextAvailable(orderId)
+- Order scheduled for next available rider
+
+ALT 2: [Rider rejects]
+- Pickup Rider -> Dispatcher: dispatcherReassigns()
+- Dispatcher must select different rider
+
+
+================================================================================
+UC07: PICKUP RIDER COLLECTS PARCEL FROM CUSTOMER - SEQUENCE DIAGRAM DESCRIPTION
+================================================================================
+
+Participants:
+1. Pickup Rider - Actor
+2. Mobile App - Interface
+3. Order Service - Order management
+4. Location Service - GPS/routing
+5. Verification Service - Identity verification
+6. Database - Data storage
+7. Notification Service - Alert system
+8. Customer - Interacting party
+
+Main Flow:
+----------
+1. Mobile App -> Pickup Rider: Receive assignment notification
+   - Notification includes:
+     * Customer address
+     * Contact details
+     * Parcel description
+     * Pickup time window
+
+2. Pickup Rider -> Mobile App: Navigate to customer location
+   - Rider initiates navigation
+
+3. Mobile App -> Location Service: getRouteToCustomer(pickupAddress)
+   - Request optimal route
+
+4. Location Service -> Mobile App: routeData(waypoints, ETA)
+   - Return navigation data with estimated arrival
+
+5. Mobile App -> Location Service: trackRiderLocation(riderId, coords)
+   - Continuously update rider location
+
+6. Location Service -> Database: updateLocation(riderId, latitude, longitude)
+   - Store location updates for tracking
+
+7. Pickup Rider -> Mobile App: Arrive at customer location
+   - Rider marks arrival
+
+8. Mobile App -> Order Service: verifyArrival(orderId, location)
+   - Confirm rider at pickup location
+
+9. Pickup Rider -> Customer: Verify customer identity
+   - Rider requests identification
+   - Verification includes:
+     * Check ID/OTP
+     * Confirm order number
+     * Match name/phone number
+
+10. Customer -> Pickup Rider: Provide identity proof (ID/OTP)
+    - Customer shows identification
+
+11. Mobile App -> Verification Service: verifyIdentity(orderId, customerId, proof)
+    - Validate customer identity
+
+12. Verification Service -> Database: checkCustomerDetails(customerId, orderId)
+    - Verify customer matches order
+
+13. Database -> Verification Service: verificationSuccess()
+    - Identity confirmed
+
+14. Verification Service -> Mobile App: identityVerified()
+    - Confirm verification passed
+
+15. Pickup Rider -> Customer: Verify parcel details
+    - Check parcel condition:
+      * Item description matches
+      * Weight/dimensions correct
+      * Packaging condition good
+      * Fragile items properly handled
+
+16. Customer -> Pickup Rider: Collect parcel
+    - Customer hands over parcel
+
+17. Pickup Rider -> Mobile App: Confirm collection in system
+    - Rider marks parcel collected
+
+18. Mobile App -> Order Service: confirmPickup(orderId, timestamp, signature)
+    - Submit pickup confirmation with digital signature
+
+19. Order Service -> Database: updateOrderStatus(orderId, "In Warehouse/Ready for Dispatch")
+    - Update order status
+
+20. Order Service -> Notification Service: notifyCustomer(orderId, "Collected")
+    - Trigger customer notification
+
+21. Notification Service -> Customer: sendNotification(customerId, "Parcel collected")
+    - Confirm successful collection
+
+Alternative Flows:
+------------------
+ALT 1: [Customer unavailable]
+- Mobile App -> Order Service: schedulePickup(orderId, newTime)
+- Reschedule pickup for later time
+
+ALT 2: [Parcel damaged/incomplete]
+- Mobile App -> Order Service: reportIssue(orderId, issueType, photos)
+- Rider reports problem with photos
+- Manager notified for resolution
+
+
+================================================================================
+UC08: DISPATCH FROM WAREHOUSE - SEQUENCE DIAGRAM DESCRIPTION
+================================================================================
+
+Participants:
+1. Warehouse Staff/Dispatcher - Actor
+2. Web App - Interface
+3. Order Service - Order management
+4. Inventory Service - Warehouse inventory
+5. Rider Service - Delivery rider management
+6. Database - Data storage
+7. Assignment Service - Assignment management
+8. Notification Service - Alert system
+9. Delivery Rider - Receiving actor
+
+Main Flow:
+----------
+1. Warehouse Staff -> Web App: Receive parcel at warehouse
+   - Staff receives parcel from pickup rider
+
+2. Web App -> Order Service: scanParcel(orderId, barcode)
+   - Scan parcel barcode/QR code
+
+3. Order Service -> Database: getOrderDetails(orderId)
+   - Retrieve order information
+
+4. Database -> Order Service: orderData(details, status)
+   - Return order details
+
+5. Warehouse Staff -> Web App: Verify order details
+   - Staff verifies:
+     * Parcel matches order description
+     * No damage during transit
+     * Complete documentation
+     * Correct destination
+
+6. Web App -> Inventory Service: updateWarehouseInventory(orderId, location)
+   - Update inventory system
+
+7. Inventory Service -> Database: addToInventory(parcelId, binLocation, timestamp)
+   - Add parcel to warehouse inventory with storage location
+
+8. Database -> Inventory Service: inventoryUpdated()
+   - Confirm inventory update
+
+9. Warehouse Staff -> Web App: Prepare parcel for delivery
+   - Staff prepares parcel:
+     * Sort by zone/route
+     * Pack securely
+     * Attach delivery labels
+     * Quality check
+
+10. Web App -> Rider Service: getAvailableDeliveryRiders(zone, capacity)
+    - Request available delivery riders
+
+11. Rider Service -> Database: queryAvailableRiders(criteria)
+    - Query riders based on:
+      * Active/on shift status
+      * Current load capacity
+      * Delivery zone match
+      * Vehicle capacity
+      * Performance rating
+
+12. Database -> Rider Service: riderList(availableRiders)
+    - Return available riders
+
+13. Rider Service -> Web App: availableRiders(list)
+    - Provide rider list
+
+14. Warehouse Staff -> Web App: Assign parcel to delivery rider
+    - Staff selects delivery rider
+
+15. Web App -> Assignment Service: assignDeliveryRider(orderId, riderId)
+    - Create delivery assignment
+
+16. Assignment Service -> Database: createDeliveryAssignment(orderId, riderId)
+    - Create assignment record
+
+17. Assignment Service -> Order Service: updateOrderStatus(orderId, "Out for Delivery")
+    - Update order status
+
+18. Order Service -> Database: saveStatus(orderId, status, riderId, timestamp)
+    - Persist status change with rider details
+
+19. Assignment Service -> Notification Service: notifyDeliveryRider(riderId, deliveryDetails)
+    - Send notification to delivery rider
+
+20. Notification Service -> Delivery Rider: sendNotification(riderId, orderDetails, instructions)
+    - Deliver assignment notification with:
+      * Delivery address
+      * Customer contact
+      * Delivery instructions
+      * Parcel details
+      * Time window
+
+Alternative Flows:
+------------------
+ALT 1: [Inventory discrepancy]
+- Inventory Service -> Warehouse Staff: reportDiscrepancy(orderId, issueType)
+- Staff reports discrepancy to manager
+- Investigation initiated
+
+ALT 2: [Parcel damaged]
+- Web App -> Notification Service: informManager(orderId, damageReport)
+- Manager notified of damage
+- Decision made on order status (repair/replace/refund)
+
+ALT 3: [Rider unavailable]
+- Rider Service -> Database: scheduleNextAvailableRider()
+- Order queued for next available rider
+- Customer notified of delay if significant
+
+
+================================================================================
+UC09: NOTIFY CUSTOMER - SEQUENCE DIAGRAM DESCRIPTION
+================================================================================
+
+Participants:
+1. Warehouse Staff/Dispatcher - Triggering actor
+2. System - Event handler
+3. Order Service - Order management
+4. Notification Service - Notification handler
+5. Database - Data storage
+6. SMS Gateway - External SMS service
+7. Email Service - Email delivery
+8. Customer - Receiving actor
+
+Main Flow:
+----------
+1. Warehouse Staff -> System: Dispatch parcel (update status to "Out for Delivery")
+   - Staff initiates dispatch process
+
+2. System -> Order Service: updateOrderStatus(orderId, "Out for Delivery")
+   - Update order status
+
+3. Order Service -> Database: saveOrderStatus(orderId, status, timestamp)
+   - Persist status change
+
+4. Database -> Order Service: statusSaved
+   - Confirm status updated
+
+5. Order Service -> System: triggerNotificationEvent(orderId)
+   - Trigger notification workflow
+
+6. System detects dispatch event
+   - Event-driven notification process begins
+
+7. System -> Database: getCustomerContactInfo(orderId)
+   - Retrieve customer contact information
+
+8. Database -> System: contactInfo(email, phone, appToken)
+   - Return contact details
+
+9. System -> Notification Service: generateNotification(orderId, contactInfo, status)
+   - Request notification generation
+
+10. Notification Service -> Database: getOrderDetails(orderId)
+    - Get order details for notification
+
+11. Database -> Notification Service: orderDetails(deliveryAddress, ETA, riderInfo)
+    - Return order and delivery information
+
+12. Notification Service creates message content:
+    "Your order #XXX is out for delivery.
+     Expected arrival: [ETA]
+     Track: [link]"
+
+13. Notification Service -> SMS Gateway: sendSMS(phone, message)
+    - Send SMS notification
+
+14. SMS Gateway -> Notification Service: SMS sent successfully
+    - Confirm SMS delivery
+
+15. Notification Service -> Email Service: sendEmail(email, subject, message)
+    - Send email notification
+
+16. Email Service -> Notification Service: Email sent successfully
+    - Confirm email delivery
+
+17. Notification Service -> Database: logNotification(orderId, channels, status, timestamp)
+    - Log notification record for auditing
+
+18. Database -> Notification Service: log saved
+    - Confirm log entry
+
+19. SMS Gateway -> Customer: Deliver SMS notification
+    - Customer receives SMS
+
+20. Email Service -> Customer: Deliver email notification
+    - Customer receives email
+
+21. Customer receives notification and can track order
+    - Customer is informed of delivery status
+
+22. Notification Service -> Database: updateNotificationStatus(notificationId, "delivered")
+    - Update notification status
+
+23. Database -> Notification Service: status updated
+    - Confirm status update
+
+24. Notification Service -> System: notificationComplete
+    - Notification workflow complete
+
+Alternative Flows:
+------------------
+ALT 1: [Notification fails]
+- Notification Service -> SMS Gateway/Email Service: sendNotification(contactInfo, message)
+- System automatically retries sending
+- Exponential backoff strategy applied
+
+ALT 2: [Contact info missing/invalid]
+- Notification Service -> Warehouse Staff: notifyStaffForManualContact(orderId)
+- Staff manually contacts customer via alternative means
+
+
+================================================================================
+UC10: TRACK ORDER - SEQUENCE DIAGRAM DESCRIPTION
+================================================================================
+
+Participants:
+1. Customer - Actor
+2. Web/Mobile App - Interface
+3. Tracking Service - Tracking handler
+4. Order Service - Order management
+5. Location Service - GPS/location provider
+6. Database - Data storage
+7. Support Service - Customer support
+
+Main Flow:
+----------
+1. Customer -> Web/Mobile App: Navigate to "Track Order" page
+   - Customer initiates tracking
+
+2. Web/Mobile App -> Tracking Service: displayOrderList()
+   - Request customer's orders
+
+3. Tracking Service -> Database: getCustomerOrders(customerId)
+   - Query customer's orders
+
+4. Database -> Tracking Service: orderList(orderId, status, date)
+   - Return order list
+
+5. Tracking Service -> Web/Mobile App: showOrders(orderList)
+   - Display order list
+
+6. Web/Mobile App -> Customer: display order list to customer
+   - Show orders available for tracking
+
+7. Customer -> Web/Mobile App: Select order to track (orderId)
+   - Customer selects specific order
+
+8. Web/Mobile App -> Tracking Service: requestTrackingInfo(orderId)
+   - Request tracking information
+
+9. Tracking Service -> Order Service: validateOrderId(orderId)
+   - Verify order exists
+
+10. Order Service -> Database: checkOrderExists(orderId)
+    - Query order existence
+
+11. Database -> Order Service: orderValid(true)
+    - Confirm order exists
+
+12. Tracking Service -> Order Service: getCurrentStatus(orderId)
+    - Get current order status
+
+13. Order Service -> Database: queryOrderStatus(orderId)
+    - Query order status
+
+14. Database -> Order Service: orderStatus(status, timestamp, riderInfo)
+    - Return current status with rider information
+
+15. Tracking Service -> Location Service: getCurrentLocation(orderId, riderId)
+    - Request real-time location if rider assigned
+
+16. Location Service -> Database: queryGPSLocation(riderId)
+    - Get rider's current GPS coordinates
+
+17. Database -> Location Service: gpsData(latitude, longitude, timestamp)
+    - Return GPS coordinates
+
+18. Location Service calculates delivery route and ETA:
+    - Calculate route from current location to destination
+    - Estimate time of arrival based on distance and traffic
+
+19. Location Service -> Database: getDeliveryRoute(currentLocation, destination)
+    - Get optimized route
+
+20. Database -> Location Service: routeData(waypoints, estimatedArrival)
+    - Return route information
+
+21. Location Service -> Tracking Service: locationInfo(coords, route, ETA)
+    - Return location and route data
+
+22. Tracking Service -> Order Service: getStatusHistory(orderId)
+    - Request historical status updates
+
+23. Order Service -> Database: queryStatusHistory(orderId)
+    - Query status change history
+
+24. Database -> Order Service: historyData(statusList, timestamps)
+    - Return complete status history
+
+25. Order Service -> Tracking Service: statusHistory(history)
+    - Return history timeline
+
+26. Tracking Service sets up real-time updates:
+    - WebSocket/Server-Sent Events connection established
+
+27. Tracking Service -> Order Service: subscribeToUpdates(orderId)
+    - Subscribe to real-time status updates
+
+28. Order Service -> Tracking Service: subscriptionActive
+    - Confirm subscription
+
+29. Tracking Service -> Web/Mobile App: displayTrackingInfo(status, location, route, ETA, history)
+    - Send tracking data
+
+30. Web/Mobile App -> Customer: renderTrackingUI(trackingData)
+    - Display tracking interface showing:
+      * Current status
+      * Live location on map
+      * Delivery route
+      * Estimated time of arrival
+      * Status history timeline
+
+Optional: [Customer has issues]
+- Customer -> Support Service: contactSupport(orderId, issue)
+- Customer can contact support directly from tracking page
+
+Alternative Flows:
+------------------
+ALT 1: [Order ID is invalid]
+- Tracking Service -> Web/Mobile App: displayError("Invalid order ID")
+- Customer must verify order number
+
+ALT 2: [Cannot retrieve location]
+- Location Service -> Tracking Service: displayLastKnownStatus(orderId)
+- Show last known status when GPS unavailable
+- Customer sees status without live location
+
+
+================================================================================
+UC11: UPDATE ORDER STATUS - SEQUENCE DIAGRAM DESCRIPTION
+================================================================================
+
+Participants:
+1. Rider/Dispatcher/Warehouse Staff - Actor
+2. Mobile/Web App - Interface
+3. Auth Service - Authorization
+4. Order Service - Order management
+5. Validation Service - Status validation
+6. Database - Data storage
+7. Notification Service - Alert system
+8. Analytics/Dashboard Service - Reporting
+
+Main Flow:
+----------
+1. Actor -> Mobile/Web App: Login to system
+   - Actor authenticates
+
+2. Mobile/Web App -> Auth Service: authenticate(credentials)
+   - Verify user credentials
+
+3. Auth Service -> Mobile/Web App: authSuccess(token, role, permissions)
+   - Return authentication token with role and permissions
+
+4. Actor -> Mobile/Web App: Navigate to "Assigned Orders"
+   - Actor accesses their orders
+
+5. Mobile/Web App -> Order Service: getAssignedOrders(actorId, role)
+   - Request orders assigned to this actor
+
+6. Order Service -> Database: queryAssignedOrders(actorId)
+   - Query orders for actor
+
+7. Database -> Order Service: orderList(orders)
+   - Return assigned orders
+
+8. Order Service -> Mobile/Web App: displayOrders(orderList)
+   - Send order list
+
+9. Mobile/Web App -> Actor: display orders
+   - Show assigned orders
+
+10. Actor -> Mobile/Web App: Select order to update (orderId)
+    - Actor selects specific order
+
+11. Mobile/Web App -> Order Service: getOrderDetails(orderId)
+    - Request order details
+
+12. Order Service -> Database: queryOrderDetails(orderId)
+    - Query full order information
+
+13. Database -> Order Service: orderDetails(currentStatus, history)
+    - Return order details with current status
+
+14. Order Service -> Mobile/Web App: showOrderDetails(details)
+    - Display order information
+
+15. Actor -> Mobile/Web App: Enter new status (status, notes, location)
+    - Actor provides new status with metadata:
+      * New status value
+      * Optional notes/comments
+      * Current location (if applicable)
+
+16. Mobile/Web App -> Order Service: submitStatusUpdate(orderId, newStatus, metadata)
+    - Submit status update request
+
+17. Order Service -> Validation Service: validateStatusTransition(currentStatus, newStatus)
+    - Validate status change is allowed
+    - Check state machine rules:
+      * "Dispatched" → "In Transit" ✓ (valid)
+      * "Delivered" → "Dispatched" ✗ (invalid)
+      * Prevents invalid status transitions
+
+18. Validation Service -> Order Service: validationResult(isValid=true)
+    - Confirm transition is valid
+
+19. Order Service -> Auth Service: checkPermissions(actorRole, orderId, newStatus)
+    - Verify actor has permission for this status change
+
+20. Auth Service -> Order Service: permissionGranted(true)
+    - Confirm actor authorized
+
+21. Order Service -> Database: updateOrderStatus(orderId, newStatus, timestamp, actorId)
+    - Update order status in database
+
+22. Database -> Order Service: statusUpdated(success)
+    - Confirm status update
+
+23. Order Service -> Database: recordStatusChange(orderId, oldStatus, newStatus, actor)
+    - Create audit trail entry
+
+24. Order Service -> Notification Service: notifyCustomer(orderId, newStatus)
+    - Trigger customer notification
+
+25. Notification Service -> Order Service: notificationQueued
+    - Confirm notification queued
+
+26. Order Service -> Analytics/Dashboard Service: updateDashboard(orderId, newStatus)
+    - Update real-time dashboards
+
+27. Analytics/Dashboard Service -> Order Service: dashboardUpdated
+    - Confirm dashboard refresh
+
+28. Order Service -> Mobile/Web App: updateSuccess("Status updated successfully")
+    - Return success confirmation
+
+29. Mobile/Web App -> Actor: displayConfirmation(message)
+    - Show success message to actor
+
+Alternative Flows:
+------------------
+ALT 1: [Status transition is invalid]
+- Validation Service -> Mobile/Web App: displayError("Invalid status transition")
+- System prevents invalid state changes
+- Actor must select valid status
+
+
+================================================================================
+UC12: GENERATE REPORT - SEQUENCE DIAGRAM DESCRIPTION
+================================================================================
+
+Participants:
+1. Manager/Admin - Actor
+2. Web App - Interface
+3. Auth Service - Authorization
+4. Report Service - Report generation
+5. Data Service - Data aggregation
+6. Database - Data storage
+7. Format Service - Report formatting
+8. File Storage - Report storage
+9. Audit Service - Logging
+
+Main Flow:
+----------
+1. Manager/Admin -> Web App: Login
+   - User authenticates
+
+2. Web App -> Auth Service: authenticate()
+   - Verify credentials
+
+3. Auth Service -> Web App: authSuccess(role, permissions)
+   - Return user role and report permissions
+
+4. Manager/Admin -> Web App: Navigate to Reports
+   - User accesses reporting section
+
+5. Web App -> Manager/Admin: displayReportTypes()
+   - Show available report types:
+     * Delivery Performance Report
+     * Payment Summary Report
+     * Rider Performance Report
+     * Order Analytics Report
+
+6. Manager/Admin -> Web App: selectReportType(type, parameters)
+   - User selects report type and parameters:
+     * Date range
+     * Filters (status, rider, region, etc.)
+     * Output format
+
+7. Web App -> Auth Service: verifyPermissions(userId, reportType)
+   - Verify user authorized for this report
+
+8. Auth Service -> Web App: permissionGranted
+   - Confirm authorization
+
+9. Web App -> Report Service: generateReport(type, dateRange, filters)
+   - Initiate report generation
+
+10. Report Service -> Data Service: retrieveData(query, params)
+    - Request data for report
+
+11. Data Service -> Database: queryDatabase(SQL)
+    - Execute database query
+
+12. Database -> Data Service: rawData(rows)
+    - Return raw data rows
+
+13. Data Service aggregates data:
+    - Calculate totals
+    - Group by categories (status, date, rider, etc.)
+    - Compute averages and statistics
+    - Identify trends
+
+14. Data Service -> Report Service: aggregatedData(metrics)
+    - Return processed data
+
+15. Report Service -> Format Service: formatReport(data, type)
+    - Format report based on selected type
+    - Format options:
+      * PDF with charts and graphs
+      * Excel spreadsheet with pivot tables
+      * CSV for data export
+      * HTML interactive dashboard
+
+16. Format Service -> Report Service: formattedReport(file)
+    - Return formatted report file
+
+17. Report Service -> File Storage: saveReport(fileName, content)
+    - Save report to storage
+
+18. File Storage -> Report Service: fileSaved(url)
+    - Return file download URL
+
+19. Report Service -> Audit Service: logReportGeneration(userId, type, timestamp)
+    - Log report generation for audit trail
+
+20. Audit Service -> Report Service: logRecorded
+    - Confirm audit log entry
+
+21. Report Service -> Web App: displayReport(reportData, downloadUrl)
+    - Send report data and download link
+
+22. Web App -> Manager/Admin: renderReport(report)
+    - Display report in browser
+
+23. Manager/Admin -> Web App: review/download/export report
+    - User can view, download, or export
+
+24. Web App -> File Storage: downloadFile(url)
+    - Request file download
+
+25. File Storage -> Manager/Admin: file delivered
+    - Report downloaded to user's device
+
+Alternative Flows:
+------------------
+ALT 1: [No data available]
+- Data Service -> Web App: displayMessage("No records found")
+- Report cannot be generated due to no matching data
+- User adjusts filters and retries
+
+ALT 2: [Export fails]
+- Format Service -> Web App: displayError("Export failed. Please retry.")
+- User can retry export in different format
+
+
+================================================================================
+END OF SEQUENCE DIAGRAM DESCRIPTIONS
+================================================================================
+
+SUMMARY:
+--------
+This document provides complete detailed descriptions of all 12 use case sequence 
+diagrams for the Delivery Management System. Each description includes:
+
+1. All participants/actors involved
+2. Complete message flow with function names and parameters
+3. Data being passed between components
+4. Decision points and validations
+5. Alternative flows for error handling
+6. Notes on business logic and validation rules
+
+These descriptions can be used to:
+- Understand system behavior without viewing diagrams
+- Implement backend APIs and services
+- Create test cases for each flow
+- Document system architecture
+- Train new team members on system flows
+
+All sequence diagrams are also available in draw.io XML format in their 
+respective UC folders (UC01-UC12).
+

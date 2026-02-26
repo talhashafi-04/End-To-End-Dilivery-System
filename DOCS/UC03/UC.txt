@@ -1,0 +1,25 @@
+Use Case Name: Process Payment​
+Scope: Delivery Management System​
+Level: User goal​
+Primary Actor: Customer​
+Stakeholders and their Interests:
+●​ Customer: Wants secure and successful payment.​
+●​ Business: Wants payment confirmation before processing order.​
+Preconditions:
+●​ Order has been placed.​
+●​ Payment method is valid and active.​
+Postconditions:
+●​ Payment is successfully processed or declined.​
+●​ Payment record is stored in the system.​
+Main Success Scenario:
+1.​ Customer selects an order to pay.​
+2.​ Customer chooses a payment method.​
+3.​ Customer enters payment details.​
+4.​ System validates payment information.​
+5.​ System processes the transaction via the gateway.​
+6.​ System receives confirmation from the gateway.​
+7.​ System updates order to “Paid” and notifies the customer..​
+Extensions:
+●​ If payment is declined then system notifies user and allows retry or selection of another
+method.​
+●​ If payment gateway is unavailable then system notifies user.​

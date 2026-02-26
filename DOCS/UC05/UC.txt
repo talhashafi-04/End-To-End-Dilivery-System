@@ -1,0 +1,22 @@
+5. Manager Delegates Order to Dispatcher
+Use Case Name: Delegate Order to Dispatcher​
+Scope: Delivery Management System​
+Level: User goal​
+Primary Actor: Manager​
+Stakeholders and their Interests:
+●​ Manager: Efficient task delegation.​
+●​ Dispatcher: Receives clear order assignment.​
+Preconditions:●​ Order is approved.​
+Postconditions:
+●​ Order is assigned to a dispatcher.
+Main Success Scenario:
+1.​ Manager views approved orders awaiting assignment.​
+2.​ Manager selects an order to delegate.​
+3.​ Manager checks dispatcher availability.​
+4.​ Manager assigns the order to a dispatcher.​
+5.​ System records the assignment.​
+6.​ System notifies the dispatcher of the new order.​
+7.​ Dispatcher confirms receipt in the system.
+Extensions:
+●​ If no dispatcher is available then system queues order.​
+●​ If dispatcher rejects assignment then manager reassigns.​

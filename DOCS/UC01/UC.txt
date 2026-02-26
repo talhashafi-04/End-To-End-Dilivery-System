@@ -1,0 +1,26 @@
+1. Authenticate User
+Use Case Name: Authenticate User​
+Scope: Delivery Management System​
+Level: User goal​
+Primary Actor: User (Customer, Manager, Dispatcher, or Rider)​
+Stakeholders and their Interests:
+●​ User: Wants secure and convenient access.​
+●​ System Administrator: Wants only authorized users to access the system.​
+Preconditions:
+●​ User has registered an account with valid credentials.​
+●​ System is online and functional.
+Postconditions:
+●​ User is successfully logged in or authentication fails with appropriate error messages.​
+Main Success Scenario:
+1.​ User navigates to the login page.​
+2.​ User enters username and password.​
+3.​ User clicks the “Login” button.​
+4.​ System verifies that the username exists.​
+5.​ System checks that the password matches.​
+6.​ System verifies the account status.​
+7.​ System grants access and displays the appropriate dashboard.
+Extensions:
+●​ If credentials are invalid then system displays error and user retries or requests
+password reset.​
+●​ If account is locked due to multiple failed attempts then user contacts admin.​
+2. Place Delivery Order

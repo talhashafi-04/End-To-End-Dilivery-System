@@ -1,0 +1,23 @@
+12. Generate Report
+Use Case Name: Generate Report​
+Scope: Delivery Management System​
+Level: User goal​
+Primary Actor: Manager / Admin​
+Stakeholders and their Interests:
+●​ Manager/Admin: Insight into performance, deliveries, payments.​
+●​ Business: Data-driven decisions.​Preconditions:
+●​ System has relevant data.​
+●​ User has proper privileges.​
+Postconditions:
+●​ Report generated and stored/exported.​
+Main Success Scenario:
+1.​ Manager or admin logs into the reporting section.​
+2.​ User selects the report type.​
+3.​ System retrieves relevant data from the database.​
+4.​ System aggregates and formats the data.​
+5.​ System generates and displays the report.​
+6.​ User reviews, downloads, or exports the report.​
+7.​ System logs report generation for auditing purposes.​
+Extensions:
+●​ If no data available then system displays “No records found.”​
+●​ If export fails then system prompts retry.​

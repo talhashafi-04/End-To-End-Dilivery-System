@@ -1,0 +1,25 @@
+Use Case Name: Place Delivery Order​
+Scope: Delivery Management System​
+Level: User goal​
+Primary Actor: Customer​
+Stakeholders and their Interests:
+●​ Customer: Wants to successfully place orders.​
+●​ Business: Wants accurate order details for timely delivery.​
+Preconditions:
+●​ User is authenticated.​
+●​ User has items to deliver.​
+Postconditions:
+●​ Delivery order is created in the system.​
+●​ Picture attached is stored in database or cloud storage.​
+Main Success Scenario:
+1.​ Customer navigates to the “Place Order” page.​
+2.​ Customer selects items and enters delivery details.​
+3.​ Customer uploads any required picture.​
+4.​ Customer reviews the order summary.​
+5.​ Customer submits the order.​
+6.​ System validates all fields and picture format.​
+7.​ Manager approves the order by reviewing the picture of the shipment
+8.​ System stores the order and confirms placement.
+Extensions:
+●​ If picture upload fails then system prompts retry.​
+●​ If order details are incomplete then system prompts for missing information.​

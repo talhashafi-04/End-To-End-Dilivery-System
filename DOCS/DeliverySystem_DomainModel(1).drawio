@@ -1,0 +1,458 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36" version="28.2.7">
+  <diagram name="Domain Model - End to End Delivery System" id="domain-model">
+    <mxGraphModel dx="1783" dy="989" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="user-class" value="&lt;&lt;abstract&gt;&gt;&#xa;User" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="40" y="40" width="200" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="user-attributes" value="- user_id: String&#xa;- username: String&#xa;- password: String&#xa;- email: String&#xa;- phone: String&#xa;- account_status: String&#xa;- created_date: Date&#xa;- last_login: Date" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="user-class" vertex="1">
+          <mxGeometry y="40" width="200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="customer-class" value="Customer" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="40" y="280" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="customer-attributes" value="- delivery_address: String&#xa;- billing_address: String&#xa;- customer_type: String&#xa;- loyalty_points: Integer" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="customer-class" vertex="1">
+          <mxGeometry y="26" width="200" height="94" as="geometry" />
+        </mxCell>
+        <mxCell id="manager-class" value="Manager" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="280" y="280" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="manager-attributes" value="- department: String&#xa;- authorization_level: Integer&#xa;- assigned_region: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="manager-class" vertex="1">
+          <mxGeometry y="26" width="200" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="dispatcher-class" value="Dispatcher" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="520" y="280" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="dispatcher-attributes" value="- assigned_zone: String&#xa;- availability_status: String&#xa;- active_orders_count: Integer" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="dispatcher-class" vertex="1">
+          <mxGeometry y="26" width="200" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="rider-class" value="Rider" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="760" y="280" width="200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="rider-attributes" value="- vehicle_type: String&#xa;- license_number: String&#xa;- availability_status: String&#xa;- current_location: String&#xa;- rider_type: String&#xa;- rating: Float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="rider-class" vertex="1">
+          <mxGeometry y="26" width="200" height="114" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-class" value="Admin" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="1000" y="280" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-attributes" value="- privileges: String[]&#xa;- access_level: String&#xa;- department: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="admin-class" vertex="1">
+          <mxGeometry y="26" width="200" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="order-class" value="Order" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+          <mxGeometry x="40" y="480" width="220" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="order-attributes" value="- order_id: String&#xa;- customer_id: String&#xa;- status: String&#xa;- order_date: Date&#xa;- approved_date: Date&#xa;- pickup_address: String&#xa;- delivery_address: String&#xa;- estimated_delivery: Date&#xa;- actual_delivery: Date&#xa;- priority: String&#xa;- total_cost: Float&#xa;- special_instructions: String&#xa;- approved_by: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="order-class" vertex="1">
+          <mxGeometry y="26" width="220" height="234" as="geometry" />
+        </mxCell>
+        <mxCell id="payment-class" value="Payment" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+          <mxGeometry x="320" y="480" width="200" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="payment-attributes" value="- payment_id: String&#xa;- order_id: String&#xa;- amount: Float&#xa;- payment_method: String&#xa;- payment_date: Date&#xa;- status: String&#xa;- transaction_id: String&#xa;- gateway_response: String&#xa;- refund_amount: Float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="payment-class" vertex="1">
+          <mxGeometry y="26" width="200" height="154" as="geometry" />
+        </mxCell>
+        <mxCell id="picture-class" value="ShipmentPicture" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+          <mxGeometry x="40" y="800" width="200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="picture-attributes" value="- picture_id: String&#xa;- order_id: String&#xa;- image_url: String&#xa;- upload_date: Date&#xa;- file_size: Integer&#xa;- format: String&#xa;- uploaded_by: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="picture-class" vertex="1">
+          <mxGeometry y="26" width="200" height="114" as="geometry" />
+        </mxCell>
+        <mxCell id="parcel-class" value="Parcel" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+          <mxGeometry x="580" y="480" width="200" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="parcel-attributes" value="- parcel_id: String&#xa;- order_id: String&#xa;- weight: Float&#xa;- dimensions: String&#xa;- status: String&#xa;- description: String&#xa;- fragile: Boolean&#xa;- collected_date: Date&#xa;- delivered_date: Date" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="parcel-class" vertex="1">
+          <mxGeometry y="26" width="200" height="154" as="geometry" />
+        </mxCell>
+        <mxCell id="warehouse-class" value="Warehouse" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#b1ddf0;strokeColor=#10739e;" parent="1" vertex="1">
+          <mxGeometry x="840" y="480" width="200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="warehouse-attributes" value="- warehouse_id: String&#xa;- name: String&#xa;- location: String&#xa;- capacity: Integer&#xa;- current_stock: Integer&#xa;- manager_id: String&#xa;- operating_hours: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="warehouse-class" vertex="1">
+          <mxGeometry y="26" width="200" height="114" as="geometry" />
+        </mxCell>
+        <mxCell id="inventory-class" value="Inventory" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#b0e3e6;strokeColor=#0e8088;" parent="1" vertex="1">
+          <mxGeometry x="840" y="680" width="200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="inventory-attributes" value="- inventory_id: String&#xa;- warehouse_id: String&#xa;- parcel_id: String&#xa;- status: String&#xa;- entry_date: Date&#xa;- exit_date: Date&#xa;- location_in_warehouse: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="inventory-class" vertex="1">
+          <mxGeometry y="26" width="200" height="114" as="geometry" />
+        </mxCell>
+        <mxCell id="assignment-class" value="Assignment" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#fad7ac;strokeColor=#b46504;" parent="1" vertex="1">
+          <mxGeometry x="320" y="720" width="200" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="assignment-attributes" value="- assignment_id: String&#xa;- order_id: String&#xa;- dispatcher_id: String&#xa;- rider_id: String&#xa;- assignment_type: String&#xa;- assignment_date: Date&#xa;- status: String&#xa;- confirmed_date: Date" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="assignment-class" vertex="1">
+          <mxGeometry y="26" width="200" height="134" as="geometry" />
+        </mxCell>
+        <mxCell id="notification-class" value="Notification" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#d0cee2;strokeColor=#56517e;" parent="1" vertex="1">
+          <mxGeometry x="1100" y="480" width="200" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="notification-attributes" value="- notification_id: String&#xa;- customer_id: String&#xa;- order_id: String&#xa;- message: String&#xa;- type: String&#xa;- sent_date: Date&#xa;- status: String&#xa;- delivery_status: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="notification-class" vertex="1">
+          <mxGeometry y="26" width="200" height="134" as="geometry" />
+        </mxCell>
+        <mxCell id="tracking-class" value="Tracking" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#bac8d3;strokeColor=#23445d;" parent="1" vertex="1">
+          <mxGeometry x="1100" y="700" width="200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="tracking-attributes" value="- tracking_id: String&#xa;- order_id: String&#xa;- location: String&#xa;- latitude: Float&#xa;- longitude: Float&#xa;- timestamp: Date&#xa;- status: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="tracking-class" vertex="1">
+          <mxGeometry y="26" width="200" height="114" as="geometry" />
+        </mxCell>
+        <mxCell id="route-class" value="Route" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#fad9d5;strokeColor=#ae4132;" parent="1" vertex="1">
+          <mxGeometry x="580" y="720" width="200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="route-attributes" value="- route_id: String&#xa;- order_id: String&#xa;- rider_id: String&#xa;- start_location: String&#xa;- end_location: String&#xa;- estimated_arrival: Date&#xa;- distance: Float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="route-class" vertex="1">
+          <mxGeometry y="26" width="200" height="114" as="geometry" />
+        </mxCell>
+        <mxCell id="report-class" value="Report" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#cdeb8b;strokeColor=#36393d;" parent="1" vertex="1">
+          <mxGeometry x="1360" y="480" width="200" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="report-attributes" value="- report_id: String&#xa;- type: String&#xa;- generated_by: String&#xa;- generated_date: Date&#xa;- start_date: Date&#xa;- end_date: Date&#xa;- data: String&#xa;- format: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="report-class" vertex="1">
+          <mxGeometry y="26" width="200" height="134" as="geometry" />
+        </mxCell>
+        <mxCell id="statushistory-class" value="StatusHistory" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#f5f5f5;strokeColor=#666666;" parent="1" vertex="1">
+          <mxGeometry x="1360" y="700" width="200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="statushistory-attributes" value="- history_id: String&#xa;- order_id: String&#xa;- old_status: String&#xa;- new_status: String&#xa;- changed_by: String&#xa;- change_date: Date&#xa;- reason: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="statushistory-class" vertex="1">
+          <mxGeometry y="26" width="200" height="114" as="geometry" />
+        </mxCell>
+        <mxCell id="inherit-customer" value="" style="endArrow=block;endSize=16;endFill=0;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" parent="1" source="customer-class" target="user-class" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="140" y="270" as="sourcePoint" />
+            <mxPoint x="140" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="inherit-manager" value="" style="endArrow=block;endSize=16;endFill=0;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="manager-class" target="user-class" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="380" y="270" as="sourcePoint" />
+            <mxPoint x="140" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="inherit-dispatcher" value="" style="endArrow=block;endSize=16;endFill=0;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" parent="1" source="dispatcher-class" target="user-class" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="620" y="270" as="sourcePoint" />
+            <mxPoint x="140" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="inherit-rider" value="" style="endArrow=block;endSize=16;endFill=0;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;" parent="1" source="rider-class" target="user-class" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="860" y="270" as="sourcePoint" />
+            <mxPoint x="140" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="inherit-admin" value="" style="endArrow=block;endSize=16;endFill=0;html=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="admin-class" target="user-attributes" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="1050" y="270" as="sourcePoint" />
+            <mxPoint x="250" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="assoc-customer-order" value="" style="endArrow=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" parent="1" source="customer-class" target="order-class" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="140" y="420" as="sourcePoint" />
+            <mxPoint x="95" y="480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-customer-order-1" value="places" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="80" y="410" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="label-customer-order-mult1" value="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="120" y="400" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label-customer-order-mult2" value="*" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="75" y="460" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-order-payment" value="" style="endArrow=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="order-attributes" target="payment-attributes" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="270" y="580" as="sourcePoint" />
+            <mxPoint x="320" y="580" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-order-payment" value="has" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="265" y="573" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="label-order-payment-mult1" value="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="260" y="593" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label-order-payment-mult2" value="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="300" y="593" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-order-picture" value="" style="endArrow=none;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="order-class" target="picture-class" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="95" y="750" as="sourcePoint" />
+            <mxPoint x="140" y="800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-order-picture" value="has" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="75" y="750" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="label-order-picture-mult1" value="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="85" y="740" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label-order-picture-mult2" value="*" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="140" y="780" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-order-parcel" value="" style="endArrow=none;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="order-attributes" target="parcel-attributes" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="270" y="545" as="sourcePoint" />
+            <mxPoint x="580" y="545" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-order-parcel" value="contains" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="400" y="518" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="label-order-parcel-mult1" value="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="260" y="525" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label-order-parcel-mult2" value="1..*" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="540" y="525" width="30" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-manager-order" value="" style="endArrow=none;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" parent="1" source="manager-class" target="order-class" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="380" as="sourcePoint" />
+            <mxPoint x="205" y="480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-manager-order" value="approves" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="205" y="410" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="label-manager-order-mult1" value="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="260" y="380" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label-manager-order-mult2" value="*" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="185" y="460" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-manager-dispatcher" value="" style="endArrow=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="manager-attributes" target="dispatcher-attributes" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="480" y="343" as="sourcePoint" />
+            <mxPoint x="520" y="343" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-manager-dispatcher" value="delegates to" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="480" y="313" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-dispatcher-assignment" value="" style="endArrow=none;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" parent="1" source="dispatcher-class" target="assignment-class" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="570" y="380" as="sourcePoint" />
+            <mxPoint x="470" y="720" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-dispatcher-assignment" value="creates" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="500" y="520" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="label-dispatcher-assignment-mult1" value="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="550" y="380" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label-dispatcher-assignment-mult2" value="*" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="470" y="700" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-order-assignment" value="" style="endArrow=none;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="order-class" target="assignment-attributes" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="205" y="740" as="sourcePoint" />
+            <mxPoint x="320" y="780" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-order-assignment" value="has" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="240" y="740" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="label-order-assignment-mult1" value="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="205" y="740" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label-order-assignment-mult2" value="*" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="300" y="763" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-rider-assignment" value="" style="endArrow=none;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="rider-class" target="assignment-attributes" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="760" y="420" as="sourcePoint" />
+            <mxPoint x="520" y="780" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-rider-assignment" value="receives" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="630" y="550" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="label-rider-assignment-mult1" value="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="740" y="420" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label-rider-assignment-mult2" value="*" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="520" y="763" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-parcel-inventory" value="" style="endArrow=none;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="parcel-attributes" target="inventory-attributes" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="780" y="620" as="sourcePoint" />
+            <mxPoint x="840" y="735" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-parcel-inventory" value="stored in" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="785" y="660" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="label-parcel-inventory-mult1" value="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="780" y="621" width="20" height="20" as="geometry" />
+          <mxPoint x="780" y="621" as="sourcePoint" />
+        </mxCell>
+        <mxCell id="label-parcel-inventory-mult2" value="0..1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="810" y="715" width="30" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-warehouse-inventory" value="" style="endArrow=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="warehouse-class" target="inventory-class" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="940" y="620" as="sourcePoint" />
+            <mxPoint x="940" y="680" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-warehouse-inventory" value="manages" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="950" y="635" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="label-warehouse-inventory-mult1" value="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="940" y="620" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label-warehouse-inventory-mult2" value="*" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="940" y="660" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-order-route" value="" style="endArrow=none;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="order-attributes" target="route-attributes" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="270" y="685" as="sourcePoint" />
+            <mxPoint x="580" y="785" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-order-route" value="has" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="400" y="725" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="label-order-route-mult1" value="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="260" y="685" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label-order-route-mult2" value="0..1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="550" y="785" width="30" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-rider-route" value="" style="endArrow=none;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" parent="1" source="rider-class" target="route-class" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="810" y="420" as="sourcePoint" />
+            <mxPoint x="730" y="720" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-rider-route" value="follows" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="730" y="550" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="label-rider-route-mult1" value="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="790" y="420" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label-rider-route-mult2" value="*" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="730" y="700" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-customer-notification" value="" style="endArrow=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="customer-attributes" target="notification-attributes" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="240" y="357" as="sourcePoint" />
+            <mxPoint x="1100" y="540" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1060" y="357" />
+              <mxPoint x="1060" y="540" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-customer-notification" value="receives" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="1010" y="520" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="label-customer-notification-mult1" value="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="240" y="337" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label-customer-notification-mult2" value="*" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="1080" y="540" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-order-notification" value="" style="endArrow=none;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" parent="1" source="order-attributes" target="notification-attributes" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="270" y="565" as="sourcePoint" />
+            <mxPoint x="1100" y="606" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1020" y="565" />
+              <mxPoint x="1020" y="606" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-order-notification" value="triggers" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="970" y="585" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="label-order-notification-mult1" value="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="260" y="545" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label-order-notification-mult2" value="*" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="1080" y="606" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-order-tracking" value="" style="endArrow=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="order-attributes" target="tracking-attributes" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="270" y="623" as="sourcePoint" />
+            <mxPoint x="1100" y="763" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="980" y="623" />
+              <mxPoint x="980" y="763" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-order-tracking" value="has" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="930" y="760" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="label-order-tracking-mult1" value="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="260" y="603" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label-order-tracking-mult2" value="*" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="1080" y="763" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-manager-report" value="" style="endArrow=none;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="manager-attributes" target="report-attributes" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="480" y="325" as="sourcePoint" />
+            <mxPoint x="1360" y="540" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1320" y="325" />
+              <mxPoint x="1320" y="540" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-manager-report" value="generates" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="1250" y="520" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-admin-report" value="" style="endArrow=none;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" parent="1" source="admin-attributes" target="report-attributes" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1200" y="356" as="sourcePoint" />
+            <mxPoint x="1360" y="606" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1280" y="356" />
+              <mxPoint x="1280" y="606" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="assoc-order-statushistory" value="" style="endArrow=none;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="order-attributes" target="statushistory-attributes" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="270" y="685" as="sourcePoint" />
+            <mxPoint x="1360" y="763" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1240" y="685" />
+              <mxPoint x="1240" y="783" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-order-statushistory" value="tracks" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="1200" y="760" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="label-order-statushistory-mult1" value="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="260" y="665" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label-order-statushistory-mult2" value="*" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="1340" y="783" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="title" value="&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;Domain Model - End-to-End Delivery System&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="580" y="10" width="480" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-title" value="&lt;b&gt;Legend&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="1600" y="40" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-1" value="User Types" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="1600" y="70" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-2" value="Order &amp; Core" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+          <mxGeometry x="1600" y="105" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-3" value="Parcel &amp; Route" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+          <mxGeometry x="1600" y="140" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-4" value="Warehouse" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;" parent="1" vertex="1">
+          <mxGeometry x="1600" y="175" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-5" value="Notification" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d0cee2;strokeColor=#56517e;" parent="1" vertex="1">
+          <mxGeometry x="1600" y="210" width="120" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

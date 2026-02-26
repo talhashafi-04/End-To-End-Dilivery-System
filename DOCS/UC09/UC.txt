@@ -1,0 +1,21 @@
+Use Case Name: Notify Customer​
+Scope: Delivery Management System​
+Level: User goal​
+Primary Actor: System / Warehouse Staff / Dispatcher
+Stakeholders and their Interests:
+●​ Customer: Wants timely and accurate updates about their order.​
+●​ Business: Enhances transparency and trust with customers.​
+Preconditions:
+●​ Parcel is dispatched and order status is updated to “Out for Delivery.”​
+Postconditions:
+●​ Customer receives notification of parcel status and expected delivery.​Main Success Scenario:
+1.​ System detects that a parcel has been dispatched.​
+2.​ System retrieves customer contact information.​
+3.​ System generates a notification message (SMS, email, or app no
+4.​ System sends notification to the customer.​
+5.​ System logs the notification for record and auditing.​
+6.​ Customer receives notification and can track order.​
+7.​ System updates notification status to confirm successful delivery of message.​
+Extensions:
+●​ If notification fails then system retries sending automatically.​
+●​ If contact information is missing or invalid then staff manually contacts the customer.​

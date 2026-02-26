@@ -1,0 +1,106 @@
+<mxfile host="app.diagrams.net" modified="2025-11-16T00:00:00.000Z" agent="draw.io" version="24.0.4">
+  <diagram name="UC04-Approve Delivery Order" id="uc04-sequence">
+    <mxGraphModel dx="1434" dy="844" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <mxCell id="title" value="UC04: Approve Delivery Order - Sequence Diagram" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="350" y="20" width="700" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="manager" value="Manager" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="80" width="30" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="web-app" value="Web App" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="180" y="90" width="100" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="order-service" value="Order Service" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="90" width="100" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="payment-service" value="Payment Service" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="90" width="110" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="policy-service" value="Policy Check&#xa;Service" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="670" y="90" width="100" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="media-service" value="Media Service" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="830" y="90" width="100" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="database" value="Database" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+          <mxGeometry x="990" y="80" width="70" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="notification" value="Notification&#xa;Service" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="90" width="100" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="dispatch" value="Dispatch Service" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="90" width="100" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="ll1" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;" edge="1" parent="1"><mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="75" y="150" as="sourcePoint" /><mxPoint x="75" y="1150" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="ll2" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;" edge="1" parent="1"><mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="229.5" y="130" as="sourcePoint" /><mxPoint x="229.5" y="1150" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="ll3" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;" edge="1" parent="1"><mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="389.5" y="130" as="sourcePoint" /><mxPoint x="389.5" y="1150" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="ll4" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;" edge="1" parent="1"><mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="554.5" y="130" as="sourcePoint" /><mxPoint x="554.5" y="1150" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="ll5" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;" edge="1" parent="1"><mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="719.5" y="130" as="sourcePoint" /><mxPoint x="719.5" y="1150" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="ll6" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;" edge="1" parent="1"><mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="879.5" y="130" as="sourcePoint" /><mxPoint x="879.5" y="1150" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="ll7" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;" edge="1" parent="1"><mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="1024.5" y="140" as="sourcePoint" /><mxPoint x="1024.5" y="1150" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="ll8" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;" edge="1" parent="1"><mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="1169.5" y="130" as="sourcePoint" /><mxPoint x="1169.5" y="1150" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="ll9" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;" edge="1" parent="1"><mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="1329.5" y="130" as="sourcePoint" /><mxPoint x="1329.5" y="1150" as="targetPoint" /></mxGeometry></mxCell>
+        
+        <mxCell id="m1" value="1: Navigate to &quot;Pending Orders&quot;" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="75" y="180" as="sourcePoint" /><mxPoint x="225" y="180" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m2" value="2: getPendingOrders()" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="230" y="210" as="sourcePoint" /><mxPoint x="385" y="210" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m3" value="3: queryPendingOrders(status=&quot;Paid&quot;)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="390" y="240" as="sourcePoint" /><mxPoint x="1020" y="240" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m4" value="4: pendingOrdersList(orders)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="1020" y="270" as="sourcePoint" /><mxPoint x="390" y="270" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m5" value="5: displayPendingOrders(orderList)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="385" y="300" as="sourcePoint" /><mxPoint x="75" y="300" as="targetPoint" /></mxGeometry></mxCell>
+        
+        <mxCell id="m6" value="6: Select order to review (orderId)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="75" y="340" as="sourcePoint" /><mxPoint x="225" y="340" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m7" value="7: getOrderDetails(orderId)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="230" y="370" as="sourcePoint" /><mxPoint x="385" y="370" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m8" value="8: queryOrderDetails(orderId)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="390" y="400" as="sourcePoint" /><mxPoint x="1020" y="400" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m9" value="9: orderData(details, customerId)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="1020" y="430" as="sourcePoint" /><mxPoint x="390" y="430" as="targetPoint" /></mxGeometry></mxCell>
+        
+        <mxCell id="m10" value="10: verifyPayment(orderId)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="390" y="460" as="sourcePoint" /><mxPoint x="550" y="460" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m11" value="11: getPaymentStatus(orderId)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="555" y="490" as="sourcePoint" /><mxPoint x="1020" y="490" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m12" value="12: paymentConfirmed(transactionId, amount)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="1020" y="520" as="sourcePoint" /><mxPoint x="555" y="520" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m13" value="13: paymentVerified()" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="550" y="550" as="sourcePoint" /><mxPoint x="390" y="550" as="targetPoint" /></mxGeometry></mxCell>
+        
+        <mxCell id="m14" value="14: getShipmentPicture(orderId)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="390" y="580" as="sourcePoint" /><mxPoint x="875" y="580" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m15" value="15: retrieveImage(imageUrl)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="880" y="610" as="sourcePoint" /><mxPoint x="1020" y="610" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m16" value="16: imageData(url)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="1020" y="640" as="sourcePoint" /><mxPoint x="880" y="640" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m17" value="17: pictureRetrieved(imageUrl)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="875" y="670" as="sourcePoint" /><mxPoint x="390" y="670" as="targetPoint" /></mxGeometry></mxCell>
+        
+        <mxCell id="m18" value="18: displayOrderForReview(details, payment, picture)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="385" y="700" as="sourcePoint" /><mxPoint x="75" y="700" as="targetPoint" /></mxGeometry></mxCell>
+        
+        <mxCell id="note1" value="Manager reviews:&#xa;- Payment confirmed&#xa;- Order details valid&#xa;- Shipment picture&#xa;- Policy compliance" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=10;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1"><mxGeometry x="30" y="720" width="160" height="80" as="geometry" /></mxCell>
+        
+        <mxCell id="m19" value="19: checkPolicyCompliance(orderDetails)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="230" y="820" as="sourcePoint" /><mxPoint x="715" y="820" as="targetPoint" /></mxGeometry></mxCell>
+        
+        <mxCell id="note2" value="Check:&#xa;- Prohibited items&#xa;- Size/weight limits&#xa;- Destination restrictions&#xa;- Documentation" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=10;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="650" y="840" width="140" height="80" as="geometry" /></mxCell>
+        
+        <mxCell id="m20" value="20: complianceResult(approved)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="715" y="940" as="sourcePoint" /><mxPoint x="230" y="940" as="targetPoint" /></mxGeometry></mxCell>
+        
+        <mxCell id="m21" value="21: Approve order" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="75" y="970" as="sourcePoint" /><mxPoint x="225" y="970" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m22" value="22: approveOrder(orderId, managerId)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="230" y="1000" as="sourcePoint" /><mxPoint x="385" y="1000" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m23" value="23: updateOrderStatus(orderId, &quot;Approved&quot;, managerId)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="390" y="1030" as="sourcePoint" /><mxPoint x="1020" y="1030" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m24" value="24: statusUpdated()" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="1020" y="1060" as="sourcePoint" /><mxPoint x="390" y="1060" as="targetPoint" /></mxGeometry></mxCell>
+        
+        <mxCell id="m25" value="25: notifyCustomer(orderId, &quot;Approved&quot;)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="390" y="1090" as="sourcePoint" /><mxPoint x="1165" y="1090" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="m26" value="26: triggerDispatch(orderId)" style="html=1;verticalAlign=bottom;endArrow=block;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="390" y="1120" as="sourcePoint" /><mxPoint x="1325" y="1120" as="targetPoint" /></mxGeometry></mxCell>
+        
+        <!-- Alternative Flow -->
+        <mxCell id="alt" value="alt" style="shape=umlFrame;whiteSpace=wrap;html=1;width=40;height=30;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="180" y="1150" width="1200" height="80" as="geometry" /></mxCell>
+        <mxCell id="altc1" value="[Order incomplete or rejected]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=2" vertex="1" parent="1"><mxGeometry x="225" y="1155" width="180" height="20" as="geometry" /></mxCell>
+        <mxCell id="me1" value="reject: requestCorrections(orderId, issues)" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#b85450;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="230" y="1180" as="sourcePoint" /><mxPoint x="385" y="1180" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="me2" value="reject: updateStatus(&quot;Rejected&quot;) &amp; notifyCustomer()" style="html=1;verticalAlign=bottom;endArrow=block;strokeColor=#b85450;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="390" y="1205" as="sourcePoint" /><mxPoint x="1165" y="1205" as="targetPoint" /></mxGeometry></mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

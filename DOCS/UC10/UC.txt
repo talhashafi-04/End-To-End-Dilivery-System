@@ -1,0 +1,22 @@
+10. Track Order
+Use Case Name: Track Order​
+Scope: Delivery Management System​
+Level: User goal​
+Primary Actor: Customer​
+Stakeholders and their Interests:
+●​ Customer: Real-time order status.​
+●​ Business: Transparency builds trust.​
+Preconditions:
+●​ Order exists and has valid status.​
+Postconditions:●​ Customer views current order location/status.​
+Main Success Scenario:
+1.​ Customer navigates to “Track Order.”​
+2.​ Customer selects the order to track.​
+3.​ System retrieves the current status and location
+4.​ System displays the delivery route and estimated arrival.​
+5.​ System shows history of previous status updates.​
+6.​ System updates tracking information in real-time.​
+7.​ Customer can contact support if there are issues.​
+Extensions:
+●​ If order ID is invalid then system displays error.​
+●​ If system cannot retrieve location then display last known status.​

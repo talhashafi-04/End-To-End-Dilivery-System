@@ -1,0 +1,23 @@
+4. Approve Delivery Order
+Use Case Name: Approve Delivery Order​
+Scope: Delivery Management System​
+Level: User goal​
+Primary Actor: Manager​
+Stakeholders and their Interests:
+●​ Manager: Wants to ensure only valid orders proceed.​
+●​ Customer: Wants timely approval of order.​
+Preconditions:
+●​ Order has been placed and payment processed.​
+Postconditions:​
+●​ Order status updated to “Approved.”​
+Main Success Scenario:
+1.​ Manager navigates to “Pending Orders.”​
+2.​ Manager selects an order to review.​
+3.​ Manager verifies payment and order details and picture of shipment.​
+4.​ Manager checks compliance with policies.​
+5.​ Manager approves the order.​
+6.​ System updates order status to “Approved.”​
+7.​ System notifies customer and triggers dispatch.
+Extensions:
+●​ If order details are incomplete then manager requests corrections.​
+●​ If order is rejected then system updates status to “Rejected” and notifies customer.​
