@@ -24,12 +24,12 @@
 ### 1. High-Level Ecosystem
 [cite_start]Swift Ship operates within a broader ecosystem, integrating with Payment Gateways for transactions, SMS/Email services for notifications, and GPS services for real-time location tracking [cite: 78-79].
 
-![System Context Diagram](1-system-context.png)
+![System Context Diagram](images/1-system-context.png)
 
 ### 2. The Order Lifecycle
 The core of our business logic is the **8-Phase Order Lifecycle**. [cite_start]Strict state transitions ensure a parcel cannot be delivered before it is picked up or processed [cite: 136-144].
 
-![Order Lifecycle Workflow](2-order-lifecycle.png)
+![Order Lifecycle Workflow](images/2-order-lifecycle.png)
 
 ---
 
@@ -37,11 +37,11 @@ The core of our business logic is the **8-Phase Order Lifecycle**. [cite_start]S
 
 ### Use Case Overview
 The system is divided into clear functional modules catering to our 7 user actors.
-![Use Case Grid](3-use-case-grid.png)
+![Use Case Grid](images/3-use-case-grid.png)
 
 ### Interaction Model
 A detailed look at how different actors (Customer, Manager, Dispatcher) interact with the core system boundaries.
-![Use Case UML Diagram](4-use-case-uml.png)
+![Use Case UML Diagram](images/4-use-case-uml.png)
 
 ---
 
@@ -55,17 +55,17 @@ A detailed look at how different actors (Customer, Manager, Dispatcher) interact
 * [cite_start]**Business Layer:** Domain models (Order, User, Parcel) and business rules [cite: 214-216].
 * [cite_start]**Data Access Layer:** DAO pattern implementation for database persistence [cite: 219-222].
 
-![Layered Architecture](5-layered-arch.png)
+![Layered Architecture](images/5-layered-arch.png)
 
 ### 2. Component Design
 [cite_start]Major system components include Authentication, Order Management, Payment Processing, Assignment Coordination, and Reporting [cite: 329-354].
 
-![Component Diagram](6-component-diagram.png)
+![Component Diagram](images/6-component-diagram.png)
 
 ### 3. Deployment Strategy
 The application is deployed using a Client-Server model. [cite_start]Client machines run the JavaFX desktop app, communicating with a central MySQL Database Server and File Storage for parcel images [cite: 396-401].
 
-![Deployment Architecture](7-deployment-arch.png)
+![Deployment Architecture](images/7-deployment-arch.png)
 
 ---
 
